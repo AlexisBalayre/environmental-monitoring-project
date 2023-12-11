@@ -1,5 +1,6 @@
 from pyspark.sql.types import FloatType, IntegerType
 import pyspark.sql.functions as F
+import datetime as dt
 
 
 # Defining a UDF to compute the AQI value for PM2.5
@@ -54,69 +55,52 @@ def get_aqi_value_p10(value):
     return 10
 
 
-
 def computeAQI(df):
-    df_aqi = df.withColumn(
-        "sensordatavalues",
-        F.explode("sensordatavalues"),  # Explode the array to separates values
+    print(dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " 2. Computing the AQI...")
+    df_exploded = df.withColumn(
+        "sensordatavalue", F.explode("sensordatavalues")
     ).withColumn(
         "aqi",
         F.when(
-            F.col("sensordatavalues.value_type") == "P1",
+            F.col("sensordatavalue.value_type") == "P1",
             get_aqi_value_p25(
-                F.col("sensordatavalues.value").cast(FloatType())
+                F.col("sensordatavalue.value").cast(FloatType())
             ),  # Cast the value to float and compute the AQI of PM2.5
         ).when(
-            F.col("sensordatavalues.value_type") == "P2",
+            F.col("sensordatavalue.value_type") == "P2",
             get_aqi_value_p10(
-                F.col("sensordatavalues.value").cast(FloatType())
+                F.col("sensordatavalue.value").cast(FloatType())
             ),  # Cast the value to float and compute the AQI of PM10
         ),
     )
-
-    df_final = df_aqi.groupBy("id").agg(
-        F.max("aqi").alias("aqi"),
+    df_exploded.cache()
+    df_grouped = (
+        df_exploded.groupBy("sensor.id", "timestamp")
+        .agg(
+            F.first("id").alias("id"),
+            F.first("location").alias("location"),
+            F.first("sensor").alias("sensor"),
+            F.max("aqi").alias("aqi"),
+            F.collect_list("sensordatavalue").alias("sensordatavalues"),
+        )
+        .selectExpr(
+            "sensor.id as sensor_id",
+            "sensor.pin as sensor_pin",
+            "sensor.sensor_type.id as sensor_type_id",
+            "sensor.sensor_type.manufacturer as sensor_type_manufacturer",
+            "sensor.sensor_type.name as sensor_type_name",
+            "location.country as country",
+            "location.latitude as latitude",
+            "location.longitude as longitude",
+            "location.altitude as altitude",
+            "location.id as location_id",
+            "aqi",
+            "sensordatavalues",
+            "timestamp",
+        )
     )
-
-    # Join the original dataframe with the AQI values
-    df_joined = df.join(df_final, "id", "left")
-
-    return df_joined
-
-
-
-
-
-""" # Flatten the dataframe
-df_flattened = (
-    df_joined.select(
-        "id",
-        "timestamp",
-        "location",
-        "sensor",
-        "sensordatavalues",
-        "aqi",
+    df_exploded.unpersist()
+    print(
+        dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Done computing the AQI.\n"
     )
-    .withColumn(
-        "sensordatavalues",
-        F.explode("sensordatavalues"),  # Explode the array to separates values
-    )
-    .selectExpr(
-        "id",
-        "timestamp",
-        "location.country as country",
-        "location.latitude as latitude",
-        "location.longitude as longitude",
-        "location.altitude as altitude",
-        "location.id as location_id",
-        "sensor.id as sensor_id",
-        "sensor.pin as sensor_pin",
-        "sensor.sensor_type.id as sensor_type_id",
-        "sensor.sensor_type.manufacturer as sensor_type_manufacturer",
-        "sensor.sensor_type.name as sensor_type_name",
-        "sensordatavalues.value_type as value_type",
-        "sensordatavalues.value as value",
-        "sensordatavalues.id as sensordatavalues_id",
-        "aqi",
-    )
-) """
+    return df_grouped
