@@ -1,3 +1,6 @@
+# collecting.py
+# The second step of the pipeline
+
 from pyspark.sql.types import FloatType, IntegerType
 import pyspark.sql.functions as F
 import datetime as dt
@@ -6,6 +9,15 @@ import datetime as dt
 # Defining a UDF to compute the AQI value for PM2.5
 @F.udf(returnType=IntegerType())
 def get_aqi_value_p25(value):
+    """
+    Computes the AQI value for PM2.5
+
+    Args:
+        value (float): The value of PM2.5
+    Returns:
+        aqi (int): The AQI value
+    """
+
     if value is None:
         return None
     if 0 <= value <= 11:
@@ -32,6 +44,16 @@ def get_aqi_value_p25(value):
 # Defining a UDF to compute the AQI value for PM10
 @F.udf(returnType=IntegerType())
 def get_aqi_value_p10(value):
+    """
+    Computes the AQI value for PM10
+
+    Args:
+        value (float): The value of PM10
+
+    Returns:
+        aqi (int): The AQI value
+    """
+
     if value is None:
         return None
     if 0 <= value <= 16:
@@ -56,9 +78,20 @@ def get_aqi_value_p10(value):
 
 
 def computeAQI(df):
+    """
+    Computes the AQI for each particulate matter sensor
+
+    Args:
+        df (DataFrame): The DataFrame containing the data from the sensors
+
+    Returns:
+        df_grouped (DataFrame): The DataFrame containing the AQI for each sensor
+    """
+
     print(dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " 2. Computing the AQI...")
     df_exploded = df.withColumn(
-        "sensordatavalue", F.explode("sensordatavalues")
+        "sensordatavalue",
+        F.explode("sensordatavalues"),  # Explode the sensordatavalues column
     ).withColumn(
         "aqi",
         F.when(
@@ -73,16 +106,16 @@ def computeAQI(df):
             ),  # Cast the value to float and compute the AQI of PM10
         ),
     )
-    df_exploded.cache()
+    df_exploded.cache()  # Cache the DataFrame to avoid recomputing it
     df_grouped = (
-        df_exploded.groupBy("sensor.id", "timestamp")
+        df_exploded.groupBy("sensor.id", "timestamp")  # Group by sensor and timestamp
         .agg(
             F.first("id").alias("id"),
             F.first("location").alias("location"),
             F.first("sensor").alias("sensor"),
-            F.max("aqi").alias("aqi"),
+            F.max("aqi").alias("aqi"),  # Compute the maximum AQI between PM2.5 and PM10
             F.collect_list("sensordatavalue").alias("sensordatavalues"),
-        )
+        )  # Aggregate the AQI and the sensordatavalues
         .selectExpr(
             "sensor.id as sensor_id",
             "sensor.pin as sensor_pin",
@@ -97,9 +130,9 @@ def computeAQI(df):
             "aqi",
             "sensordatavalues",
             "timestamp",
-        )
+        )  # Select the columns to keep
     )
-    df_exploded.unpersist()
+    df_exploded.unpersist()  # Unpersist the DataFrame to free memory
     print(
         dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Done computing the AQI.\n"
     )

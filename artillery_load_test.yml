@@ -3,9 +3,9 @@ config:
   # It's designed to be highly scalable
   target: http://grafana-1777174802.us-east-1.elb.amazonaws.com
   phases:
-    - duration: 60
+    - duration: 400
       arrivalRate: 1
-      rampTo: 5
+      rampTo: 2
       name: Warm up phase
     - duration: 60
       arrivalRate: 5

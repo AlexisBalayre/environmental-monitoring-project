@@ -1,3 +1,6 @@
+# storing.py
+# The last step of the pipeline
+
 from pyspark.sql.types import BooleanType
 import pyspark.sql.functions as F
 from pyspark.sql import Row
@@ -8,6 +11,18 @@ import datetime as dt
 
 
 def keepOnlyUpdatedRows(database_name, table_name, df):
+    """
+    Verifies if the data is already stored in Timestream and keeps only the updated values
+
+    Args:
+        database_name (string): The name of the database
+        table_name (string): The name of the table
+        df (DataFrame): The DataFrame containing the data to be stored
+
+    Returns:
+        df_updated (DataFrame): The DataFrame containing only the updated rows
+    """
+
     print(
         dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         + " 3. Filtering the data to keep only the updated rows..."
@@ -20,27 +35,42 @@ def keepOnlyUpdatedRows(database_name, table_name, df):
         database_name, table_name
     )
 
-    # Exécution de la requête
-    session = boto3.Session()
+    # Initialize the boto3 client
+    session = boto3.Session()  # Create a boto3 session
     query_client = session.client(
         "timestream-query", config=Config(region_name="us-east-1")
-    )
-    paginator = query_client.get_paginator("query")
+    )  # Create a boto3 client
+    paginator = query_client.get_paginator("query")  # Create a paginator
 
-    last_timestamps = {}
-    response_iterator = paginator.paginate(QueryString=query)
+    # Get the last timestamp for each sensor
+    last_timestamps = (
+        {}
+    )  # Initialize a dictionary to store the last timestamp for each sensor
+    response_iterator = paginator.paginate(QueryString=query)  # Paginate the query
     for response in response_iterator:
         for row in response["Rows"]:
             sensor_id = row["Data"][0]["ScalarValue"]
-            last_timestamp = row["Data"][1]["ScalarValue"]
-            last_timestamps[sensor_id] = last_timestamp
+            last_timestamps[sensor_id] = row["Data"][1]["ScalarValue"]
 
+    # If there is no data in Timestream, return the DataFrame as is
     if len(last_timestamps) == 0:
         print("No data in Timestream")
         return df
 
+    # Define an UDF to check if the row is updated
     @F.udf(returnType=BooleanType())
     def isUpdated(sensor_id, timestamp):
+        """
+        Checks if the row is updated
+
+        Args:
+            sensor_id (string): The sensor ID
+            timestamp (string): The timestamp of the row
+
+        Returns:
+            isUpdated (boolean): True if the row is updated, False otherwise
+        """
+
         if str(sensor_id) not in last_timestamps:
             return True
         current_timestamp = dt.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
@@ -50,10 +80,13 @@ def keepOnlyUpdatedRows(database_name, table_name, df):
         last_sensor_timestamp = dt.datetime.strptime(
             last_timestamp_micro, "%Y-%m-%d %H:%M:%S.%f"
         )
-        return current_timestamp > last_sensor_timestamp
+        return (
+            current_timestamp > last_sensor_timestamp
+        )  # Return True if the row is updated
 
-    # Filtrer le DataFrame pour inclure seulement les données mises à jour
-    df_updated = df.filter(isUpdated("sensor_id", "timestamp"))
+    df_updated = df.filter(
+        isUpdated("sensor_id", "timestamp")
+    )  # Filter the DataFrame to keep only the updated rows
     print(
         dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         + " Done filtering the data to keep only the updated rows.\n"
@@ -62,6 +95,13 @@ def keepOnlyUpdatedRows(database_name, table_name, df):
 
 
 def _print_rejected_records_exceptions(err):
+    """
+    Prints the rejected records exceptions
+
+    Args:
+        err (RejectedRecordsException): The RejectedRecordsException
+    """
+
     print("RejectedRecords: ", err)
     for rr in err.response["RejectedRecords"]:
         print("Rejected Index " + str(rr["RecordIndex"]) + ": " + rr["Reason"])
@@ -69,8 +109,16 @@ def _print_rejected_records_exceptions(err):
             print("Rejected record existing version: ", rr["ExistingVersion"])
 
 
-# Write records to Timestream
 def write_records(database_name, table_name, client, records):
+    """
+    Helper function to write records to Timestream
+
+    Args:
+        database_name (string): The name of the database
+        table_name (string): The name of the table
+        client (TimestreamWriteClient): The TimestreamWriteClient
+        records (list): The list of records to write
+    """
     try:
         result = client.write_records(
             DatabaseName=database_name,
@@ -88,6 +136,15 @@ def write_records(database_name, table_name, client, records):
 
 
 def writeToTimestream(database_name, table_name, partionned_df):
+    """
+    Writes the data to Timestream
+
+    Args:
+        database_name (string): The name of the database
+        table_name (string): The name of the table
+        partionned_df (DataFrame): The DataFrame containing the data to be stored
+    """
+
     # Initialize the boto3 client for each partition
     session = boto3.Session()
     write_client = session.client(
@@ -159,20 +216,26 @@ def writeToTimestream(database_name, table_name, partionned_df):
                 "MeasureValues": measuresValues,
             }
             records.append(record)
+
+            # Write records to Timestream if there are 98 records
             if len(records) >= 98:
-                write_records(database_name, table_name, write_client, records)
-                records = []
-                time.sleep(1)
+                write_records(
+                    database_name, table_name, write_client, records
+                )  # Write records to Timestream
+                records = []  # Reset the records list
+                time.sleep(1)  # Sleep for 1 second
 
         except Exception as e:
             print(f"Error processing row: {row}")
             print(f"Exception: {e}")
 
-    # Write records to Timestream
+    # Write records to Timestream if there are any remaining records
     if len(records) > 100:
         while len(records) > 100:
-            write_records(database_name, table_name, write_client, records[:99])
+            write_records(
+                database_name, table_name, write_client, records[:99]
+            )  # Write records to Timestream
             records = records[99:]  # Keep the remaining records
-            time.sleep(1)
+            time.sleep(1)  # Sleep for 1 second
     elif len(records) > 0:
         write_records(database_name, table_name, write_client, records)

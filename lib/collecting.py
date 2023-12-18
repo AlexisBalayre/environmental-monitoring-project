@@ -1,4 +1,4 @@
-# ingestion.py
+# collecting.py
 # The first step of the pipeline
 
 from requests import Session
@@ -7,11 +7,15 @@ import datetime as dt
 
 def fetch_sensors_data(sparkSession):
     """
-    Fetches the latest data from the sensors and writes it to a CSV file
+    Fetches the latest data from the sensors and returns it as a Spark DataFrame
+
+    Args:
+        sparkSession (SparkSession): The SparkSession instance
 
     Returns:
-        now (datetime): The timestamp of the fetched data
+        df (DataFrame): The DataFrame containing the last data from the sensors
     """
+
     # Fetches the latest data from the data.sensor.community API
     url = "https://data.sensor.community/static/v2/data.json"
     # Use a session to avoid creating a new connection for each request

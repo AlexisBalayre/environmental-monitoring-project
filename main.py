@@ -7,9 +7,9 @@ from pyspark.sql import SparkSession
 import datetime as dt
 import time
 
-from lib.ingestion import fetch_sensors_data
-from lib.formatting import computeAQI
-from lib.writeToTimestream import keepOnlyUpdatedRows, writeToTimestream
+from lib.collecting import fetch_sensors_data
+from lib.processing import computeAQI
+from lib.storing import keepOnlyUpdatedRows, writeToTimestream
 
 if __name__ == "__main__":
     # Define the Timestream database and table names
@@ -50,12 +50,12 @@ if __name__ == "__main__":
             print(
                 dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 + " 4. Writing the data to Timestream..."
-            )
+            ) 
             dataFiltered.foreachPartition(
                 lambda partition: writeToTimestream(
                     DATABASE_NAME, TABLE_NAME, partition
-                )
-            )
+                ) 
+            ) 
             print(
                 dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 + " Done writing the data to Timestream.\n"
