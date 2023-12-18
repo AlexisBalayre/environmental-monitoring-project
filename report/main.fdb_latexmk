@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1702927639 "main.aux" "main.bbl" "main" 1702927649 0
+["bibtex main"] 1702927790 "main.aux" "main.bbl" "main" 1702927795 0
   "./CUCitations.bib" 1702923544 359 b4dcdcfa36f1d3fa63b982caeba75898 ""
   "./CranfieldNumbered.bst" 1702630679 40883 e68dccfb69fb01c9688750392ebeb179 ""
-  "main.aux" 1702927649 12293 f09bbfb6ce21e9ac568ae43c58958838 "pdflatex"
+  "main.aux" 1702927795 12294 6475b13e8677405b901f5f01806d5463 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1702927644 "/Users/alexis/Cranfield/cloud-computing/assessment/report/main.tex" "main.pdf" "main" 1702927649 0
+["pdflatex"] 1702927790 "/Users/alexis/Cranfield/cloud-computing/assessment/report/main.tex" "main.pdf" "main" 1702927795 0
   "../lib/collecting.py" 1702904740 1454 e0886d5a2872af0742eb2266a1326f85 ""
   "../lib/processing.py" 1702905059 4019 dfc4b62ffc1e8247d97531eb5670e1e2 ""
   "../lib/storing.py" 1702905793 8480 6a31e70830c9cf97cb4543694ff365c3 ""
@@ -17,7 +17,7 @@
   "../services/get_iam_credentials.service" 1702890152 175 004b2ed2c6baab5841734347584a772b ""
   "../services/grafana_server.service" 1702906692 1679 f56792809d302bc6dbe1f89a4fae650b ""
   "../services/spark_python_job.service" 1702315559 153 e6fd263b3c8aa6bfdfbdb5bad3dfd843 ""
-  "/Users/alexis/Cranfield/cloud-computing/assessment/report/main.tex" 1702927640 26346 80647d63e61cf51d29c73d2300953516 ""
+  "/Users/alexis/Cranfield/cloud-computing/assessment/report/main.tex" 1702927785 26347 a2e304362137c927a928ca9db9454080 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -171,13 +171,13 @@
   "images/std-confirmed-cases-by-week-and-continent.png" 1702630679 122112 a21ba5be1b03614f6e325dd8650d0729 ""
   "images/top-100-locations-most-affected.png" 1702630679 404616 34f1ab23a2101a403512db5b5533b9d8 ""
   "images/top-50-locations-most-affected.png" 1702630679 376900 1b15cb02426a02eb28a51f7ddfd2dabd ""
-  "main.aux" 1702927649 12293 f09bbfb6ce21e9ac568ae43c58958838 "pdflatex"
-  "main.bbl" 1702927639 330 52a426881f2c05146c9724ba6715af08 "bibtex main"
-  "main.lof" 1702927649 1681 3b8ce257faa792e93ed0befb9cb6c417 "pdflatex"
-  "main.lot" 1702927649 613 e7c26485203412ae73ad78d7e4243c30 "pdflatex"
-  "main.out" 1702927649 1321 b208f421f2578c5fb6d614d73c7e7730 "pdflatex"
-  "main.tex" 1702927640 26346 80647d63e61cf51d29c73d2300953516 ""
-  "main.toc" 1702927649 3062 bb1b2d18b3411e7efbc7bfac68e926ad "pdflatex"
+  "main.aux" 1702927795 12294 6475b13e8677405b901f5f01806d5463 "pdflatex"
+  "main.bbl" 1702927790 330 52a426881f2c05146c9724ba6715af08 "bibtex main"
+  "main.lof" 1702927795 1681 3b8ce257faa792e93ed0befb9cb6c417 "pdflatex"
+  "main.lot" 1702927795 613 e7c26485203412ae73ad78d7e4243c30 "pdflatex"
+  "main.out" 1702927795 1326 c4c1194132686d2f2494efe7aecff960 "pdflatex"
+  "main.tex" 1702927785 26347 a2e304362137c927a928ca9db9454080 ""
+  "main.toc" 1702927795 3063 360cf209ddcae49d0cafe02f00586608 "pdflatex"
   (generated)
   "main.aux"
   "main.lof"
