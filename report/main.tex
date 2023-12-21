@@ -34,8 +34,13 @@
 \definecolor{codeteal}{rgb}{0, 0.5, 0.5}        % Chaînes de caractères
 \definecolor{terminalback}{rgb}{0.05, 0.05, 0.05} % Fond très sombre pour le terminal
 \definecolor{terminaltext}{rgb}{0.7, 0.7, 0.7}    % Texte clair pour le terminal
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\definecolor{terminalbgcolor}{HTML}{330033}
+\definecolor{terminalrulecolor}{HTML}{000099}
 
-\lstdefinestyle{python}{
+\lstdefinestyle{pythonstyle}{
     language=Python,
     backgroundcolor=\color{backcolour},
     commentstyle=\color{codegreen},
@@ -62,23 +67,42 @@
     framexrightmargin=15pt,
 }
 
-\lstdefinestyle{terminal}{
-    backgroundcolor=\color{terminalback}, % Background color
-    basicstyle=\color{terminaltext}\ttfamily\scriptsize, % Text style
-    frame=single, % Frame style
-    rulecolor=\color{codegray}, % Frame color
-    framexleftmargin=15pt, % Left margin
-    framextopmargin=5pt, % Top margin
-    framexbottommargin=5pt, % Bottom margin
-    framexrightmargin=15pt, % Right margin
-    breaklines=true, % Automatic line breaking
-    captionpos=b, % Caption position (bottom in this case)
-    keepspaces=true, % Keep spaces for indentation
-    showspaces=false, % Do not show spaces explicitly
-    showstringspaces=false, % Do not show spaces in strings
-    showtabs=false, % Do not show tabs
-    tabsize=4, % Tab size
-    numbers=none, % Line numbers (none in this case)
+\lstdefinestyle{bashstyle}{
+    language=bash,
+    backgroundcolor=\color{backcolour},
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    identifierstyle=\color{codepurple},
+    commentstyle=\color{codegreen},
+    morecomment=[l]{\#},   % Define comment style
+    frame=single,          % adds a frame around the code
+    rulecolor=\color{gray},% if not set, the frame-color may be changed on line-breaks
+    breakatwhitespace=false,
+    breaklines=true,       % sets automatic line breaking
+    captionpos=b,          % sets the caption-position to bottom
+    keepspaces=true,       % keeps spaces in text
+    showspaces=false,      % show spaces everywhere adding particular underscores
+    showstringspaces=false % underline spaces within strings only
+}
+
+\lstdefinestyle{servicestyle}{
+backgroundcolor=\color{backcolour},      % choose the background color
+basicstyle=\ttfamily\scriptsize, % print whole listing white
+keywordstyle=\color{blue},          % attributes in blue
+stringstyle=\color{red},            % values in red
+identifierstyle=\color{codepurple},
+breakatwhitespace=false,
+breaklines=true,                    % sets automatic line breaking
+captionpos=b,                       % sets the caption-position to bottom
+keepspaces=true,                    % keeps spaces in text
+showspaces=false,                   % show spaces everywhere adding particular underscores
+showstringspaces=false,             % underline spaces within strings only
+frame=single,                       % adds a frame around the code
+rulecolor=\color{gray},             % if not set, the frame-color may be changed on line-breaks
+morecomment=[l]{\#},                % Define comment style
+moredelim=[s][\color{codegreen}]{[}{]}, % color everything between [ and ] in green
+morekeywords={Description,Wants,After,ExecStart,WantedBy,EnvironmentFile,User,Group,Type,Restart,Documentation,WorkingDirectory,RuntimeDirectory,RuntimeDirectoryMode,LimitNOFILE,TimeoutStopSec,CapabilityBoundingSet,DeviceAllow,LockPersonality,MemoryDenyWriteExecute,NoNewPrivileges,PrivateDevices,PrivateTmp,ProtectClock,ProtectControlGroups,ProtectHome,ProtectHostname,ProtectKernelLogs,ProtectKernelModules,ProtectKernelTunables,ProtectProc,ProtectSystem,RemoveIPC,RestrictAddressFamilies,RestrictNamespaces,RestrictRealtime,RestrictSUIDSGID,SystemCallArchitectures,UMask} % add your attributes here
 }
 
 % Title Page Set Up
@@ -512,112 +536,112 @@ distributed processing overhead makes it less efficient for such tasks.
 \bibliography{CUCitations}
 
 \appendix
-\begin{appendices}
-    \chapter{Documentation}
-    \begin{subappendices}
-        \section{Project tree}
-        \begin{lstlisting}[breaklines=true, basicstyle=\small]
-        lib/
-        collecting.py
-        processing.py
-        storing.py
-        scripts/
-            get_iam_credentials.sh
-            start_spark_job.sh
-        services/
-            get_iam_credentials.service
-            spark_python_job.service
-            grafana_server.service
-        artillery_load_test.yml
-        ingestion_iot_data_flatten.py
-        main.py
-        README.md
-        requirements.txt
-        \end{lstlisting}
+\chapter{Documentation}
 
-        \section{Getting Started}
-        To run the program, follow these steps:
-        \begin{enumerate}
-            \itemindent=17.87pt
-            \item Create a virtual environment using \texttt{python3 -m venv venv}.
-            \item Activate the virtual environment using \texttt{source venv/bin/activate}.
-            \item Install the required dependencies using \texttt{pip3 install -r
-                      requirements.txt}.
-            \item Run the program using \texttt{python3 main.py}.
-            \item Visualise the results using \texttt{visualisation.ipynb} (Jupyter Notebook).
-        \end{enumerate}
+\begin{subappendices}
+    \section{Project tree}
+    \begin{lstlisting}[breaklines=true, basicstyle=\small]
+    lib/
+    collecting.py
+    processing.py
+    storing.py
+    scripts/
+        get_iam_credentials.sh
+        start_spark_job.sh
+    services/
+        get_iam_credentials.service
+        spark_python_job.service
+        grafana_server.service
+    artillery_load_test.yml
+    ingestion_iot_data_flatten.py
+    main.py
+    README.md
+    requirements.txt
+    \end{lstlisting}
 
-        \section{Detailed Features of Functions}
-        \begin{description}
-            \item \texttt{collecting.py}
-                  \begin{itemize}
-                      \item \texttt{fetch\_sensors\_data(sparkSession)}: Function to ingest the latest data from the sensors and returns it as a Spark DataFrame.
-                  \end{itemize}
+    \section{Getting Started}
+    To run the program, follow these steps:
+    \begin{enumerate}
+        \itemindent=17.87pt
+        \item Create a virtual environment using \texttt{python3 -m venv venv}.
+        \item Activate the virtual environment using \texttt{source venv/bin/activate}.
+        \item Install the required dependencies using \texttt{pip3 install -r
+                  requirements.txt}.
+        \item Run the program using \texttt{python3 main.py}.
+        \item Visualise the results using \texttt{visualisation.ipynb} (Jupyter Notebook).
+    \end{enumerate}
 
-            \item \texttt{processing.py}
-                  \begin{itemize}
-                      \item \texttt{get\_aqi\_value\_p25(value)}: Function for calculating the AQI value for PM2.5.
-                      \item \texttt{get\_aqi\_value\_p10(value)}: Function for calculating the AQI value for PM10.
-                      \item \texttt{computeAQI(df)}: Function for calculating the AQI value for each particulate matter sensor and returning the DataFrame with the AQI column.
-                  \end{itemize}
+    \section{Detailed Features of Functions}
+    \begin{description}
+        \item \texttt{collecting.py}
+              \begin{itemize}
+                  \item \texttt{fetch\_sensors\_data(sparkSession)}: Function to ingest the latest data from the sensors and returns it as a Spark DataFrame.
+              \end{itemize}
 
-            \item \texttt{storing.py}
-                  \begin{itemize}
-                      \item \texttt{keepOnlyUpdatedRows(database\_name, table\_name, df)}: Function for keeping only the rows that have been updated in the DataFrame.
-                      \item \texttt{\_print\_rejected\_records\_exceptions(err)}: Internal function for printing the rejected records exceptions.
-                      \item \texttt{write\_records(database\_name, table\_name, client, records)}: Internal function for writing a batch of records to the Timestream database.
-                      \item \texttt{writeToTimestream(database\_name, table\_name, partionned\_df)}: Function for writing the DataFrame to the Timestream database.
-                  \end{itemize}
-        \end{description}
-    \end{subappendices}
+        \item \texttt{processing.py}
+              \begin{itemize}
+                  \item \texttt{get\_aqi\_value\_p25(value)}: Function for calculating the AQI value for PM2.5.
+                  \item \texttt{get\_aqi\_value\_p10(value)}: Function for calculating the AQI value for PM10.
+                  \item \texttt{computeAQI(df)}: Function for calculating the AQI value for each particulate matter sensor and returning the DataFrame with the AQI column.
+              \end{itemize}
 
-    \chapter{Source Codes}
-    \begin{subappendices}
-        \section{Ingestion, Processing \& Storing Pipeline Source Code}
-        \lstset{style=python}
-        \lstinputlisting[style=mystyle]{../main.py}
+        \item \texttt{storing.py}
+              \begin{itemize}
+                  \item \texttt{keepOnlyUpdatedRows(database\_name, table\_name, df)}: Function for keeping only the rows that have been updated in the DataFrame.
+                  \item \texttt{\_print\_rejected\_records\_exceptions(err)}: Internal function for printing the rejected records exceptions.
+                  \item \texttt{write\_records(database\_name, table\_name, client, records)}: Internal function for writing a batch of records to the Timestream database.
+                  \item \texttt{writeToTimestream(database\_name, table\_name, partionned\_df)}: Function for writing the DataFrame to the Timestream database.
+              \end{itemize}
+    \end{description}
+\end{subappendices}
 
-        \section{Data Collecting Source Code}
-        \lstset{style=python}
-        \lstinputlisting[style=mystyle]{../lib/collecting.py}
+\chapter{Source Codes}
+\begin{subappendices}
+    \section{Ingestion, Processing \& Storing Pipeline Source Code}
+    \lstinputlisting[style=pythonstyle]{../main.py}
 
-        \section{Data Processing Source Code}
-        \lstset{style=python}
-        \lstinputlisting[style=mystyle]{../lib/processing.py}
+    \newpage
+    \section{Data Collecting Source Code}
+    \lstinputlisting[style=pythonstyle]{../lib/collecting.py}
 
-        \section{Data Storing Source Code}
-        \lstset{style=python}
-        \lstinputlisting[style=mystyle]{../lib/storing.py}
+    \newpage
+    \section{Data Processing Source Code}
+    \lstinputlisting[style=pythonstyle]{../lib/processing.py}
 
-        \section { Scripts \& Services Source Code }
-        \subsection{Scripts}
+    \newpage
+    \section{Data Storing Source Code}
+    \lstinputlisting[style=pythonstyle]{../lib/storing.py}
 
-        Script used by the \texttt{get\_iam\_credentials} service to retrieve the IAM
-        credentials from the metadata server. \lstset{style=terminal}
-        \lstinputlisting[style=mystyle]{../scripts/get_iam_credentials.sh}
+    \newpage
+    \section{Scripts \& Services Source Codes }
+    \subsection{Scripts}
 
-        Script used by the \texttt{spark\_python\_job} service to run the Python Spark
-        job. \lstset{style=terminal}
-        \lstinputlisting[style=mystyle]{../scripts/start_spark_job.sh}
+    Script used by the \texttt{get\_iam\_credentials} service to retrieve the IAM
+    credentials from the metadata server.
+    \lstinputlisting[style=bashstyle]{../scripts/get_iam_credentials.sh}
 
-        \subsection{Services}
+    Script used by the \texttt{spark\_python\_job} service to run the Python Spark
+    job.\lstinputlisting[style=bashstyle]{../scripts/start_spark_job.sh}
 
-        Service used by the Ubuntu EC2 instance to retrieve the IAM credentials from
-        the metadata server. \lstset{style=terminal}
-        \lstinputlisting[style=mystyle]{../services/get_iam_credentials.service}
+    \newpage
+    \subsection{Services}
 
-        Service used by the Ubuntu EC2 instance to run the Python Spark job (Data
-        Collecting, Processing and Storing). \lstset{style=terminal}
-        \lstinputlisting[style=mystyle]{../services/spark_python_job.service}
+    \subsubsection{Get IAM Credentials Service}
+    Service used by the Ubuntu EC2 instance to retrieve the IAM credentials from
+    the metadata server.
+    \lstinputlisting[style=servicestyle]{../services/get_iam_credentials.service}
 
-        Service used by the Linux EC2 instances to run the Grafana server (Data
-        Distributing). \lstset{style=terminal}
-        \lstinputlisting[style=mystyle]{../services/grafana_server.service}
-    \end{subappendices}
-\end{appendices}
+    \subsubsection{Spark Python Job Service}
+    Service used by the Ubuntu EC2 instance to run the Python Spark job (Data
+    Collecting, Processing and Storing).
+    \lstinputlisting[style=servicestyle]{../services/spark_python_job.service}
+
+    \newpage
+    \subsubsection{Grafana Server Service}
+    Service used by the Linux EC2 instances to run the Grafana server (Data
+    Distributing).
+    \lstinputlisting[style=servicestyle]{../services/grafana_server.service}
+\end{subappendices}
 
 \end{document}
-
-\section{Scripts \& Services}
-\begin{subappendices}
 

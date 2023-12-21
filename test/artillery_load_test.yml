@@ -3,18 +3,30 @@ config:
   # It's designed to be highly scalable
   target: http://grafana-1777174802.us-east-1.elb.amazonaws.com
   phases:
-    - duration: 400
+    - duration: 50
       arrivalRate: 1
-      rampTo: 2
-      name: Warm up phase
+      name: Stage 1
+    - pause: 30
+    - duration: 50
+      arrivalRate: 1
+      name: Stage 2 
+    - pause: 60
     - duration: 60
-      arrivalRate: 5
-      rampTo: 10
-      name: Ramp up load
-    - duration: 30
-      arrivalRate: 10
-      rampTo: 30
-      name: Spike phase
+      arrivalRate: 1
+      name: Stage 3
+    - pause: 30
+    - duration: 60
+      arrivalRate: 1
+      name: Stage 4
+    - pause: 60
+    - duration: 50
+      arrivalRate: 1
+      name: Stage 5
+    - pause: 60
+    - duration: 50
+      arrivalRate: 1
+      name: Stage 6
+
   # Load & configure a couple of useful plugins
   # https://docs.art/reference/extensions
   plugins:
@@ -33,5 +45,5 @@ scenarios:
         - get:
             url: "/dashboards"
         - get:
-            url: "/d/f8742187-f440-4ee8-96cc-bad5af8edef1/air-quality-monitoring?orgId=1"
+            url: "/d/f8742187-f440-4ee8-96cc-bad5af8edef1/air-quality-monitoring?orgId=1&var-measure_name=aqi&var-location_id=64294"
         count: 100

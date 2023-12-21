@@ -29,12 +29,9 @@
 \contentsline {section}{\numberline {A.C}Detailed Features of Functions}{21}{section.1.A.C}%
 \contentsline {chapter}{\numberline {B}Source Codes}{22}{appendix.B}%
 \contentsline {section}{\numberline {B.A}Ingestion, Processing \& Storing Pipeline Source Code}{22}{section.2.B.A}%
-\contentsline {section}{\numberline {B.B}Data Collecting Source Code}{24}{section.2.B.B}%
-\contentsline {section}{\numberline {B.C}Data Processing Source Code}{25}{section.2.B.C}%
-\contentsline {section}{\numberline {B.D}Data Storing Source Code}{28}{section.2.B.D}%
-\contentsline {section}{\numberline {B.E}Scripts \& Services Source Codes }{32}{section.2.B.E}%
-\contentsline {subsection}{\numberline {B.E.1}Scripts}{32}{subsection.2.B.E.1}%
-\contentsline {subsection}{\numberline {B.E.2}Services}{33}{subsection.2.B.E.2}%
-\contentsline {subsubsection}{\numberline {B.E.2.1}Get IAM Credentials Service}{33}{subsubsection.2.B.E.2.1}%
-\contentsline {subsubsection}{\numberline {B.E.2.2}Spark Python Job Service}{33}{subsubsection.2.B.E.2.2}%
-\contentsline {subsubsection}{\numberline {B.E.2.3}Grafana Server Service}{34}{subsubsection.2.B.E.2.3}%
+\contentsline {section}{\numberline {B.B}Data Collecting Source Code}{23}{section.2.B.B}%
+\contentsline {section}{\numberline {B.C}Data Processing Source Code}{24}{section.2.B.C}%
+\contentsline {section}{\numberline {B.D}Data Storing Source Code}{26}{section.2.B.D}%
+\contentsline {section}{\numberline {B.E}Scripts \& Services Source Codes }{30}{section.2.B.E}%
+\contentsline {subsection}{\numberline {B.E.1}Scripts}{30}{subsection.2.B.E.1}%
+\contentsline {subsection}{\numberline {B.E.2}Services}{30}{subsection.2.B.E.2}%
