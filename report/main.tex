@@ -86,6 +86,30 @@
     showstringspaces=false % underline spaces within strings only
 }
 
+\lstdefinestyle{ymlstyle}{
+    language=Python,
+    backgroundcolor=\color{backcolour},
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    identifierstyle=\color{codepurple},
+    commentstyle=\color{codegreen},
+    morecomment=[l]{\#},   % Define comment style
+    frame=single,          % adds a frame around the code
+    rulecolor=\color{gray},% if not set, the frame-color may be changed on line-breaks
+    breakatwhitespace=false,
+    breaklines=true,       % sets automatic line breaking
+    captionpos=b,          % sets the caption-position to bottom
+    keepspaces=true,       % keeps spaces in text
+    showspaces=false,      % show spaces everywhere adding particular underscores
+    showstringspaces=false, % underline spaces within strings only
+    literate=% Special handling for dot notations
+        {http.response_time.p99}{{\textcolor{blue}{http.response\_time.p99}}}{18}
+        {http.response_time.p95}{{\textcolor{blue}{http.response\_time.p95}}}{18}
+        {metrics-by-endpoint}{{\textcolor{blue}{metrics-by-endpoint}}}{16},
+    morekeywords={config, flow, target, phases, plugins, scenarios, loop, get, url, count, ensure, apdex, threshold, thresholds, duration, arrivalRate, name, pause, metrics -by-endpoint}, % Additional YAML-specific keywords
+}
+
 \lstdefinestyle{servicestyle}{
 backgroundcolor=\color{backcolour},      % choose the background color
 basicstyle=\ttfamily\scriptsize, % print whole listing white
@@ -292,20 +316,14 @@ The benefits of using a workflow platform such as Apache Airflow are its
 ability to schedule and automate the pipeline, as well as its ability to
 monitor the pipeline and send alerts if a task fails.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=1\linewidth]{images/Screenshot 2023-11-14 at 12.10.48.png}
-    \caption{Apache Airflow DAG Graph}\label{fig:apache-airflow}
-\end{figure}
-
 \newpage
 \chapter{Results \& Discussion}
 
-\section{Queries Results}
+\section{Results}
 The programme was last run on 18 November 2023. The appendix~\ref{appendix:4}
 shows the output of the program on the terminal.
 
-\subsection{Query 1}
+\subsection{Accessing the Data - Grafana Dashboard} 
 
 The first query takes around 3 seconds, and the table
 ~\ref{tab:query1-results-sample} shows a sample of the data calculated during
@@ -317,45 +335,29 @@ was heavily impacted by the pandemic, reaching an average peak in February
 2022. The same is true for Korea in figure~\ref{fig:sub2} and the United States
 in figure~\ref{fig:sub3}, which were heavily impacted.
 
-\begin{table}[h]
+\begin{figure}[H]
     \centering
-    \captionsetup{font=large}
-    \caption{Query 1 Results Sample}
-    \normalsize
-    \begin{tabular}{|l|c|c|c|c|c|}
-        \hline
-          & Country/Region & Year & Month & Average            \\
-        \hline
-        1 & Afghanistan    & 2020 & 1     & 0.0                \\
-        2 & Afghanistan    & 2020 & 2     & 0.1724137931034483 \\
-        3 & Afghanistan    & 2020 & 3     & 5.193548387096774  \\
-        4 & Afghanistan    & 2020 & 4     & 55.36666666666667  \\
-        5 & Afghanistan    & 2020 & 5     & 430.741935483871   \\
-        \hline
-    \end{tabular}\label{tab:query1-results-sample}
-\end{table}
+    \includegraphics[width=1\linewidth]{images/grafana-1.png}
+    \caption{Load Test Result}\label{fig:top-100-locations-most-affected}
+\end{figure}
+
 
 \begin{figure}[H]
-    \vspace{-15pt}
     \centering
-    \begin{subfigure}[b]{\linewidth}
-        \includegraphics[width=\linewidth]{images/mean-daily-confirmed-cases-per-month-1.png}
-        \caption{Countries 1 to 67}\label{fig:sub1}
-        \vspace{-2pt}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{\linewidth}
-        \includegraphics[width=\linewidth]{images/mean-daily-confirmed-cases-per-month-2.png}
-        \caption{Countries 68 to 134}\label{fig:sub2}
-        \vspace{-2pt}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{\linewidth}
-        \includegraphics[width=\linewidth]{images/mean-daily-confirmed-cases-per-month-3.png}
-        \caption{Countries 135 to 201}\label{fig:sub3}
-        \vspace{-5pt}
-    \end{subfigure}
-    \caption{Mean Daily Confirmed Cases Per Month}\label{fig:mean-daily-confirmed-cases-per-month}
+    \includegraphics[width=1\linewidth]{images/grafana-4.png}
+    \caption{Load Test Result}\label{fig:top-100-locations-most-affected}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{images/grafana-2.png}
+    \caption{Load Test Result}\label{fig:top-100-locations-most-affected}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{images/grafana-3.png}
+    \caption{Load Test Result}\label{fig:top-100-locations-most-affected}
 \end{figure}
 
 \newpage
@@ -372,33 +374,10 @@ proportional to how the location has been affected by the pandemic.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{images/top-100-locations-most-affected.png}
-    \caption{Top 100 Locations most affected by the pandemic}\label{fig:top-100-locations-most-affected}
+    \includegraphics[width=1\linewidth]{images/autoscaling-test.png}
+    \caption{Load Test Result}\label{fig:top-100-locations-most-affected}
 \end{figure}
 
-\begin{table}[H]
-    \centering
-    \captionsetup{font=large}
-    \caption{Query 2 Results Sample}
-    \normalsize
-    \begin{tabular}{|l|c|c|c|c|c|c|c|}
-        \hline
-           & Continent & WeekRange             & Mean     & Std      & Min & Max \\
-        \hline
-        1  & Africa    & 19/01/2020-25/01/2020 & 0.0      & 0.0      & 0   & 0   \\
-        2  & Africa    & 26/01/2020-01/02/2020 & 0.0      & 0.0      & 0   & 0   \\
-        3  & Africa    & 02/02/2020-08/02/2020 & 0.0      & 0.0      & 0   & 0   \\
-        4  & Africa    & 09/02/2020-15/02/2020 & 0.0      & 0.0      & 0   & 0   \\
-        5  & Africa    & 16/02/2020-22/02/2020 & 0.0      & 0.0      & 0   & 0   \\
-        6  & Africa    & 23/02/2020-29/02/2020 & 0.0      & 0.0      & 0   & 0   \\
-        7  & Africa    & 01/03/2020-07/03/2020 & 0.02857  & 0.16903  & 0   & 1   \\
-        8  & Africa    & 08/03/2020-14/03/2020 & 0.65714  & 1.73108  & 0   & 9   \\
-        9  & Africa    & 15/03/2020-21/03/2020 & 2.74285  & 4.53964  & 0   & 17  \\
-        10 & Africa    & 22/03/2020-28/03/2020 & 12.62857 & 15.33754 & 0   & 59  \\
-        11 & Africa    & 29/03/2020-04/04/2020 & 14.97142 & 19.31242 & 0   & 82  \\
-        \hline
-    \end{tabular}\label{tab:query2-results-sample}
-\end{table}
 
 \newpage
 
@@ -408,32 +387,9 @@ standard deviation of the number of confirmed cases by week and continent. The
 results are consistent with expectations: the continents most affected are
 America and Europe~\cite{NYT}.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{images/mean-confirmed-cases-by-week-and-continent.png}
-    \caption{Mean Confimed Cases By Week and Continent}\label{fig:mean-confirmed-cases-by-week-and-continent}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{images/std-confirmed-cases-by-week-and-continent.png}
-    \caption{Standard Deviation Confimed Cases By Week and Continent}\label{fig:std-confirmed-cases-by-week-and-continent}
-\end{figure}
 
 \newpage
 The figures~\ref{fig:max-confirmed-cases-by-week-and-continent} and~\ref{fig:min-confirmed-cases-by-week-and-continent} show the maximum and minimum of the number of confirmed cases by week and continent.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{images/max-confirmed-cases-by-week-and-continent.png}
-    \caption{Maximum Confimed Cases By Week and Continent}\label{fig:max-confirmed-cases-by-week-and-continent}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{images/min-confirmed-cases-by-week-and-continent.png}
-    \caption{Minimum Confimed Cases By Week and Continent}\label{fig:min-confirmed-cases-by-week-and-continent}
-\end{figure}
 
 \newpage
 \subsection{Query 3}
@@ -448,11 +404,6 @@ implementation. Locations used to compute the statistics are shown on the map
 of figure~\ref{fig:top-50-locations-most-affected}. The area of the circles is
 proportional to how the location has been affected by the pandemic.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{images/top-50-locations-most-affected.png}
-    \caption{Top 50 Locations most affected by the pandemic}\label{fig:top-50-locations-most-affected}
-\end{figure}
 
 \begin{table}[H]
     \centering
@@ -497,18 +448,6 @@ and~\ref{fig:covid-19-clusters-spark} show the clusters of the top 50 locations
 most affected by the pandemic in March 2020. The clusters are represented by
 different colours.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{images/covid-19-clusters-custom.png}
-    \caption{Custom KMeans Clustering on 03/2020}\label{fig:covid-19-clusters-custom}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{images/covid-19-clusters-spark.png}
-    \caption{Spark MLlib KMeans Clustering on 03/2020}\label{fig:covid-19-clusters-spark}
-\end{figure}
-
 \newpage
 
 \section{Discussion of Results}\label{sec:discussion-of-results}
@@ -552,7 +491,12 @@ distributed processing overhead makes it less efficient for such tasks.
         get_iam_credentials.service
         spark_python_job.service
         grafana_server.service
-    artillery_load_test.yml
+    test/
+        artillery_load_test.yml
+        monitoring.py
+        metrics.csv
+        results.json
+        visualisation_load_test.ipynb
     ingestion_iot_data_flatten.py
     main.py
     README.md
@@ -641,6 +585,16 @@ distributed processing overhead makes it less efficient for such tasks.
     Service used by the Linux EC2 instances to run the Grafana server (Data
     Distributing).
     \lstinputlisting[style=servicestyle]{../services/grafana_server.service}
+
+    \newpage
+    \section{Load Test Source Codes }
+
+    \subsection{Artillery Load Test Configuration File}
+    \lstinputlisting[style=ymlstyle]{../test/artillery_load_test.yml}
+
+    \newpage
+    \subsection{Instances Monitoring Script}
+    \lstinputlisting[style=pythonstyle]{../test/monitoring.py}
 \end{subappendices}
 
 \end{document}
