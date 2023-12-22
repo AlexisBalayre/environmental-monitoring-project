@@ -16,32 +16,36 @@
 \contentsline {subsection}{\numberline {2.1.5}Pipeline Implementation on AWS}{6}{subsection.2.1.5}%
 \contentsline {section}{\numberline {2.2}Data Distributing}{7}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Overview of the Pipeline Architecture}{7}{subsection.2.2.1}%
-\contentsline {section}{\numberline {2.3}Pipeline of the Project}{13}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Pipeline Overview}{13}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Pipeline Orchestration}{14}{subsection.2.3.2}%
-\contentsline {chapter}{\numberline {3}Results \& Discussion}{15}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Results}{15}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Accessing the Data - Grafana Dashboard}{15}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Load Test}{20}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}Discussion of Results}{24}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Ethical Considerations and Challenges}{25}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Conclusion}{26}{chapter.4}%
-\contentsline {chapter}{References}{27}{chapter*.23}%
-\contentsline {chapter}{\numberline {A}Documentation}{28}{appendix.A}%
-\contentsline {section}{\numberline {A.A}Project tree}{28}{section.1.A.A}%
-\contentsline {section}{\numberline {A.B}Getting Started}{28}{section.1.A.B}%
-\contentsline {section}{\numberline {A.C}Detailed Features of Functions}{29}{section.1.A.C}%
-\contentsline {chapter}{\numberline {B}Source Codes}{30}{appendix.B}%
-\contentsline {section}{\numberline {B.A}Ingestion, Processing \& Storing Pipeline Source Code}{30}{section.2.B.A}%
-\contentsline {section}{\numberline {B.B}Data Collecting Source Code}{32}{section.2.B.B}%
-\contentsline {section}{\numberline {B.C}Data Processing Source Code}{33}{section.2.B.C}%
-\contentsline {section}{\numberline {B.D}Data Storing Source Code}{36}{section.2.B.D}%
-\contentsline {section}{\numberline {B.E}Scripts \& Services Source Codes }{40}{section.2.B.E}%
-\contentsline {subsection}{\numberline {B.E.1}Scripts}{40}{subsection.2.B.E.1}%
-\contentsline {subsection}{\numberline {B.E.2}Services}{41}{subsection.2.B.E.2}%
-\contentsline {subsubsection}{\numberline {B.E.2.1}Get IAM Credentials Service}{41}{subsubsection.2.B.E.2.1}%
-\contentsline {subsubsection}{\numberline {B.E.2.2}Spark Python Job Service}{41}{subsubsection.2.B.E.2.2}%
-\contentsline {subsubsection}{\numberline {B.E.2.3}Grafana Server Service}{42}{subsubsection.2.B.E.2.3}%
-\contentsline {section}{\numberline {B.F}Load Test Source Codes }{43}{section.2.B.F}%
-\contentsline {subsection}{\numberline {B.F.1}Artillery Load Test Configuration File}{43}{subsection.2.B.F.1}%
-\contentsline {subsection}{\numberline {B.F.2}Instances Monitoring Script}{44}{subsection.2.B.F.2}%
+\contentsline {subsection}{\numberline {2.2.2}Auto Scaling Group Configuration}{9}{subsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.2.1}AMI Configuration}{10}{subsubsection.2.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2.2}Launch Template Configuration}{11}{subsubsection.2.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.2.3}Auto Scaling Group Configuration}{12}{subsubsection.2.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.2.4}Target Group Configuration}{13}{subsubsection.2.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.2.5}Load Balancer Configuration}{14}{subsubsection.2.2.2.5}%
+\contentsline {section}{\numberline {2.3}Pipeline of the Project}{15}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Results \& Discussion}{16}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Results}{16}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Accessing the Data - Grafana Dashboard}{16}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Load Test}{21}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Discussion of Results}{22}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Data Security and Sovereignty Considerations}{23}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Conclusion}{24}{chapter.4}%
+\contentsline {chapter}{References}{25}{chapter*.23}%
+\contentsline {chapter}{\numberline {A}Documentation}{26}{appendix.A}%
+\contentsline {section}{\numberline {A.A}Project tree}{26}{section.1.A.A}%
+\contentsline {section}{\numberline {A.B}Getting Started}{26}{section.1.A.B}%
+\contentsline {section}{\numberline {A.C}Detailed Features of Functions}{27}{section.1.A.C}%
+\contentsline {chapter}{\numberline {B}Source Codes}{28}{appendix.B}%
+\contentsline {section}{\numberline {B.A}Ingestion, Processing \& Storing Pipeline Source Code}{28}{section.2.B.A}%
+\contentsline {section}{\numberline {B.B}Data Collecting Source Code}{30}{section.2.B.B}%
+\contentsline {section}{\numberline {B.C}Data Processing Source Code}{31}{section.2.B.C}%
+\contentsline {section}{\numberline {B.D}Data Storing Source Code}{34}{section.2.B.D}%
+\contentsline {section}{\numberline {B.E}Scripts \& Services Source Codes }{38}{section.2.B.E}%
+\contentsline {subsection}{\numberline {B.E.1}Scripts}{38}{subsection.2.B.E.1}%
+\contentsline {subsection}{\numberline {B.E.2}Services}{39}{subsection.2.B.E.2}%
+\contentsline {subsubsection}{\numberline {B.E.2.1}Get IAM Credentials Service}{39}{subsubsection.2.B.E.2.1}%
+\contentsline {subsubsection}{\numberline {B.E.2.2}Spark Python Job Service}{39}{subsubsection.2.B.E.2.2}%
+\contentsline {subsubsection}{\numberline {B.E.2.3}Grafana Server Service}{40}{subsubsection.2.B.E.2.3}%
+\contentsline {section}{\numberline {B.F}Load Test Source Codes }{41}{section.2.B.F}%
+\contentsline {subsection}{\numberline {B.F.1}Artillery Load Test Configuration File}{41}{subsection.2.B.F.1}%
+\contentsline {subsection}{\numberline {B.F.2}Instances Monitoring Script}{42}{subsection.2.B.F.2}%

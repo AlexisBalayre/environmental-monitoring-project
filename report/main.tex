@@ -401,16 +401,16 @@ data collected. Here is a brief overview of the pipeline architecture:
 
 \begin{enumerate}
     \item \textbf{Internet Gateway}: \\
-    Users initiate their interaction with the system through the secure Internet Gateway. Access to the Grafana dashboards is facilitated through a dedicated URL, which can be visited at: \href{http://grafana-1777174802.us-east-1.elb.amazonaws.com/d/f8742187-f440-4ee8-96cc-bad5af8edef1/air-quality-monitoring}{Air Quality Monitoring Dashboard}.
+          Users initiate their interaction with the system through the secure Internet Gateway. Access to the Grafana dashboards is facilitated through a dedicated URL, which can be visited at: \href{http://grafana-1777174802.us-east-1.elb.amazonaws.com/d/f8742187-f440-4ee8-96cc-bad5af8edef1/air-quality-monitoring}{Air Quality Monitoring Dashboard}.
 
     \item \textbf{Load Balancer}: \\
-    The Load Balancer evenly distributes incoming traffic to the EC2 instances, ensuring balanced workload distribution and optimal resource utilization.
+          The Load Balancer evenly distributes incoming traffic to the EC2 instances, ensuring balanced workload distribution and optimal resource utilization.
 
     \item \textbf{Grafana Dashboard Access}: \\
-    A Grafana dashboard, hosted on one of the Load Balancers, presents the ingested data stored in the Timestream database, providing real-time visualization of the air quality metrics.
+          A Grafana dashboard, hosted on one of the Load Balancers, presents the ingested data stored in the Timestream database, providing real-time visualization of the air quality metrics.
 
     \item \textbf{CloudWatch Monitoring}: \\
-    AWS CloudWatch continuously monitors the total CPU utilization across all EC2 instances within the Auto Scaling Group. Depending on the aggregated CPU usage, CloudWatch dynamically upscales or downscales the resources to maintain system efficiency and cost-effectiveness.
+          AWS CloudWatch continuously monitors the total CPU utilization across all EC2 instances within the Auto Scaling Group. Depending on the aggregated CPU usage, CloudWatch dynamically upscales or downscales the resources to maintain system efficiency and cost-effectiveness.
 \end{enumerate}
 
 \begin{figure}[H]
@@ -419,11 +419,21 @@ data collected. Here is a brief overview of the pipeline architecture:
     \caption{Data Distributing Pipeline Diagram}
 \end{figure}
 
+\subsection{Auto Scaling Group Configuration}
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/grafana.png}
     \caption{Auto Scaling Group Pipeline Diagram}
 \end{figure}
+
+\newpage
+\subsubsection{AMI Configuration}
+
+An Amazon Machine Image (AMI) is a template that contains the software
+configuration (operating system, application server, and applications) required
+to launch an EC2 instance. A custom AMI using the Amazon Linux 2 operating
+system was created to host the Grafana server.
 
 \begin{figure}[H]
     \centering
@@ -431,17 +441,36 @@ data collected. Here is a brief overview of the pipeline architecture:
     \caption{AMI Settings Screenshot}
 \end{figure}
 
+\newpage 
+\subsubsection{Launch Template Configuration}
+A launch template was defined to deploy the EC2 instances in the Auto Scaling
+Group using the custom AMI. The launch template also defines the instance type,
+security group, key pair, and user data.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/launch-template.png}
     \caption{Launch Template Settings Screenshot}
 \end{figure}
 
+\newpage
+\subsubsection{Auto Scaling Group Configuration}
+An Auto Scaling Group was created to manage the EC2 instances of the
+Distributing Data Pipeline. The Auto Scaling Group is configured to use the
+launch template and to scale between 1 and 5 instances, depending on the CPU
+utilization of the instances. The Auto Scaling Group also defines the target
+group and load balancer to use for distributing traffic between the instances.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/auto-scaling-group.png}
     \caption{Auto Scaling Group Settings Screenshot}
 \end{figure}
+
+The Auto Scaling Group is configured to use the following scaling policy:
+\begin{itemize}
+    \item \textbf{Scale-out Policy:} The scale-out policy is triggered when the average CPU utilization of the instances is greater than 60\% for 3 minutes. The scale-out policy adds 1 instance to the Auto Scaling Group.
+    \item \textbf{Scale-in Policy:} The scale-in policy is triggered when the average CPU utilization of the instances is less than 42\% for 15 minutes. The scale-in policy removes 1 instance from the Auto Scaling Group.
+    \item \textbf{Cooldown Period:} The cooldown period is set to 60 seconds to prevent the Auto Scaling Group from scaling in or out too quickly.
+\end{itemize}
 
 \begin{figure}[H]
     \centering
@@ -449,11 +478,22 @@ data collected. Here is a brief overview of the pipeline architecture:
     \caption{Scaling Policy Settings Screenshot}
 \end{figure}
 
+\subsubsection{Target Group Configuration}
+
+A target group was created to distribute traffic between the EC2 instances of
+the Auto Scaling Group.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/target-group.png}
     \caption{Target Group Settings Screenshot}
 \end{figure}
+
+\newpage 
+\subsubsection{Load Balancer Configuration}
+A load balancer was created to distribute traffic between the EC2 instances of
+the Auto Scaling Group. The load balancer is configured to use the target group
+and to listen on port 80.
 
 \begin{figure}[H]
     \centering
@@ -463,38 +503,12 @@ data collected. Here is a brief overview of the pipeline architecture:
 
 \newpage
 \section{Pipeline of the Project}
-\subsection{Pipeline Overview}
-
-The pipeline of this project is composed of four main components: \textbf{data
-    ingestion}, \textbf{query 1}, \textbf{query 2} and \textbf{query 3}.\newline
-
-The \textbf{ingestion} task retrieves the last version of the data set from the
-source and stores it in the data lake (CSV file stored in local storage). Then,
-the \textbf{queries 1, 2 \& 3} tasks retrieves the data from the data lake and
-performs the queries on the data.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/pipeline.png}
     \caption{Data Distributing Pipeline Diagram}
 \end{figure}
-
-\newpage
-\subsection{Pipeline Orchestration}
-
-In order to orchestrate and automate the pipeline, a scheduled task must be run
-every day to retrieve the latest version of the dataset and run the tasks when
-a new daily row is added at 23:59 UTC to the dataset.\newline
-
-To perform this task, a DAG (Directed Acyclic Graph) was created using Apache
-Airflow. The DAG is scheduled to run every day at 00:00 UTC and is composed of
-four tasks: \textbf{ingestion}, \textbf{query 1}, \textbf{query 2} and
-\textbf{query 3}. The screenshot below~\ref{fig:apache-airflow} shows the DAG
-graph of the pipeline in the web interface of Apache Airflow.\newline
-
-The benefits of using a workflow platform such as Apache Airflow are its
-ability to schedule and automate the pipeline, as well as its ability to
-monitor the pipeline and send alerts if a task fails.
 
 \newpage
 \chapter{Results \& Discussion}
@@ -577,41 +591,11 @@ proportional to how the location has been affected by the pandemic.
 
 \newpage
 
-The figures below~\ref{fig:mean-confirmed-cases-by-week-and-continent}
-and~\ref{fig:std-confirmed-cases-by-week-and-continent} show the mean and
-standard deviation of the number of confirmed cases by week and continent. The
-results are consistent with expectations: the continents most affected are
-America and Europe~\cite{NYT}.
-
-\newpage
-The figures~\ref{fig:max-confirmed-cases-by-week-and-continent} and~\ref{fig:min-confirmed-cases-by-week-and-continent} show the maximum and minimum of the number of confirmed cases by week and continent.
-
-\newpage
-
-The figures below~\ref{fig:covid-19-clusters-custom}
-and~\ref{fig:covid-19-clusters-spark} show the clusters of the top 50 locations
-most affected by the pandemic in March 2020. The clusters are represented by
-different colours.
-
-\newpage
-
 \section{Discussion of Results}\label{sec:discussion-of-results}
-As the previous results show, it seems that scripts not using Spark are faster.
-While these differences in execution time may seem surprising at first glance,
-they can in fact be attributed to several factors:
 
-\begin{enumerate}
-    \item \textbf{Data size and structure:} The DataFrame, with its 289 entries and 1147 columns occupying 2.5 MB of memory, is relatively modest in size. Pandas is particularly efficient at processing such large amounts of data in memory on a single node. Spark, on the other hand, is designed for distributed processing of large datasets. In this case, the overheads of distributing the data and managing the Spark environment may outweigh the benefits of using it for smaller datasets.
-    \item \textbf{Operational efficiency:} Pandas performs vectorised operations that are optimised for speed, especially with datasets that fit easily into memory on a single computer. Spark, while powerful for processing large volumes of data, introduces an initial overhead for distributing data and configuring the distributed environment, which can slow down processing for smaller datasets.
-    \item \textbf{Complexity of the environment:} Complexity of the environment: Running operations in a Spark environment involves initializing a cluster (even in local mode), distributing tasks, and managing distributed memory, which adds extra processing time compared to running in-memory Pandas directly.
-\end{enumerate}
-
-Thus in this project run locally, Pandas is faster than Spark, due to its
-efficient management of in-memory operations on a single node. Spark's
-distributed processing overhead makes it less efficient for such tasks.
 
 \newpage
-\section{Ethical Considerations and Challenges}
+\section{Data Security and Sovereignty Considerations}
 
 \newpage
 \chapter{Conclusion}
@@ -642,7 +626,6 @@ distributed processing overhead makes it less efficient for such tasks.
         metrics.csv
         results.json
         visualisation_load_test.ipynb
-    ingestion_iot_data_flatten.py
     main.py
     README.md
     requirements.txt
