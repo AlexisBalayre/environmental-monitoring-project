@@ -64,7 +64,7 @@ if __name__ == "__main__":
             # Sleep for 10 seconds
             print(
                 dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                + " Done with the pipeline. Waiting for 2 minutes.\n"
+                + " Done with the pipeline. Waiting for 10 seconds.\n"
             )
             time.sleep(10)
         except Exception as e:

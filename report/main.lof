@@ -1,13 +1,24 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Data Collecting, Processing \& Storing Pipeline Diagram\relax }}{2}{figure.caption.4}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Data Distributing Pipeline Diagram\relax }}{7}{figure.caption.5}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Data Distributing Pipeline Diagram\relax }}{8}{figure.caption.6}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Auto Scaling Group Pipeline Diagram\relax }}{9}{figure.caption.7}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces AMI Settings Screenshot\relax }}{10}{figure.caption.8}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Launch Template Settings Screenshot\relax }}{10}{figure.caption.9}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Auto Scaling Group Settings Screenshot\relax }}{11}{figure.caption.10}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Scaling Policy Settings Screenshot\relax }}{11}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Target Group Settings Screenshot\relax }}{12}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Load Balancer Settings Screenshot\relax }}{12}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Data Distributing Pipeline Diagram\relax }}{13}{figure.caption.14}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Load Test Result\relax }}{9}{figure.caption.6}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Load Test Result\relax }}{9}{figure.caption.7}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Load Test Result\relax }}{10}{figure.caption.8}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Load Test Result\relax }}{10}{figure.caption.9}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Load Test Result\relax }}{11}{figure.caption.10}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Grafana Dashboard Main Panel\relax }}{16}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Grafana Dashboard Main Panel\relax }}{16}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Grafana Dashboard AQI Map Panel\relax }}{17}{figure.caption.17}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Grafana Dashboard IoT Data Panel - Time Range Choice\relax }}{17}{figure.caption.18}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Grafana Dashboard IoT Data Panel - Measure Value Choice\relax }}{18}{figure.caption.19}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Grafana Dashboard IoT Data Panel - Apply a Filter\relax }}{18}{figure.caption.20}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Grafana Dashboard IoT Data Panel - Export Values\relax }}{19}{figure.caption.21}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Load Test Result\relax }}{20}{figure.caption.22}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -17,7 +17,7 @@ def fetch_sensors_data(sparkSession):
     """
 
     # Fetches the latest data from the data.sensor.community API
-    url = "https://data.sensor.community/static/v2/data.json"
+    url = "https://data.sensor.community/static/v2/data.24h.json"
     # Use a session to avoid creating a new connection for each request
     session = Session()
     try:
