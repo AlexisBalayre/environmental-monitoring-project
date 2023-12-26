@@ -10,6 +10,7 @@
 \contentsline {subsubsection}{\numberline {2.1.2.2}Ingestion Script}{3}{subsubsection.2.1.2.2}%
 \contentsline {subsection}{\numberline {2.1.3}Data Processing}{3}{subsection.2.1.3}%
 \contentsline {subsubsection}{\numberline {2.1.3.1}Processing Script}{3}{subsubsection.2.1.3.1}%
+\contentsline {subsubsection}{\numberline {2.1.3.2}Leveraging Apache Spark}{4}{subsubsection.2.1.3.2}%
 \contentsline {subsection}{\numberline {2.1.4}Data Storing}{4}{subsection.2.1.4}%
 \contentsline {subsubsection}{\numberline {2.1.4.1}Database Choice}{4}{subsubsection.2.1.4.1}%
 \contentsline {subsubsection}{\numberline {2.1.4.2}Storing Script}{5}{subsubsection.2.1.4.2}%
@@ -32,7 +33,7 @@
 \contentsline {subsection}{\numberline {3.2.2}Data Sovereignty}{22}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}Specific Fields for Further Examination}{22}{subsection.3.2.3}%
 \contentsline {chapter}{\numberline {4}Conclusion}{23}{chapter.4}%
-\contentsline {chapter}{References}{24}{chapter*.23}%
+\contentsline {chapter}{References}{24}{chapter*.24}%
 \contentsline {chapter}{\numberline {A}Documentation}{25}{appendix.A}%
 \contentsline {section}{\numberline {A.A}Project tree}{25}{section.1.A.A}%
 \contentsline {section}{\numberline {A.B}Getting Started}{25}{section.1.A.B}%
