@@ -441,7 +441,7 @@ system was created to host the Grafana server.
     \caption{AMI Settings Screenshot}
 \end{figure}
 
-\newpage 
+\newpage
 \subsubsection{Launch Template Configuration}
 A launch template was defined to deploy the EC2 instances in the Auto Scaling
 Group using the custom AMI. The launch template also defines the instance type,
@@ -489,7 +489,7 @@ the Auto Scaling Group.
     \caption{Target Group Settings Screenshot}
 \end{figure}
 
-\newpage 
+\newpage
 \subsubsection{Load Balancer Configuration}
 A load balancer was created to distribute traffic between the EC2 instances of
 the Auto Scaling Group. The load balancer is configured to use the target group
@@ -514,91 +514,126 @@ and to listen on port 80.
 \chapter{Results \& Discussion}
 
 \section{Results}
-The programme was last run on 18 November 2023. The appendix~\ref{appendix:4}
-shows the output of the program on the terminal.
-
 \subsection{Accessing the Data - Grafana Dashboard}
 
-The first query takes around 3 seconds, and the table
-~\ref{tab:query1-results-sample} shows a sample of the data calculated during
-the task. In order to evaluate performance, an equivalent script not using
-Spark was run. Execution time was 0.5 sec. The~\ref{sec:discussion-of-results}
-section will cover this point. The results are consistent with what was
-expected~\cite{NYT}. For example, the figure~\ref{fig:sub1} shows that Brazil
-was heavily impacted by the pandemic, reaching an average peak in February
-2022. The same is true for Korea in figure~\ref{fig:sub2} and the United States
-in figure~\ref{fig:sub3}, which were heavily impacted.
+The Grafana dashboard, a vital tool in air quality monitoring, is accessible at
+the following URL:
+\href{http://grafana-1777174802.us-east-1.elb.amazonaws.com/d/f8742187-f440-4ee8-96cc-bad5af8edef1/air-quality-monitoring}{Air
+    Quality Monitoring Dashboard}.
+
+The Grafana dashboard provides an interactive interface enabling users to
+analyse air quality data. Users can customise the time interval, measurement
+value and location ID. The dashboard consists of five main panels, each
+providing unique information::
+\begin{enumerate}
+    \item \textbf{Measure Value Evolution:} This panel shows the evolution of the selected measure value in the selected location over the selected time range.
+    \item \textbf{Max AQI:} This panel shows the maximum AQI value in the selected location over the selected time range.
+    \item \textbf{Mean AQI:} This panel shows the mean AQI value in the selected location over the selected time range.
+    \item \textbf{AQI Map:} This panel shows the AQI value of each location on a map.
+    \item \textbf{IoT Data:} This panel shows all the data collected by the IoT sensors related to the selected
+\end{enumerate}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/grafana-1.png}
-    \caption{Grafana Dashboard Main Panel}\label{fig:top-100-locations-most-affected}
+    \caption{Grafana Dashboard: Measure Value Evolution, Max \& Mean AQI}\label{fig:grafana-main-panel-1}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/grafana-2.png}
-    \caption{Grafana Dashboard Main Panel}\label{fig:top-100-locations-most-affected}
+    \caption{Grafana Dashboard: AQI Map \& IoT Data}\label{fig:grafana-main-panel-2}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/grafana-4.png}
-    \caption{Grafana Dashboard AQI Map Panel}\label{fig:top-100-locations-most-affected}
+    \caption{Grafana Dashboard AQI Map Panel}\label{fig:grafana-aqi-map-panel}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/time-range.png}
-    \caption{Grafana Dashboard IoT Data Panel - Time Range Choice}\label{fig:top-100-locations-most-affected}
+    \caption{Grafana Dashboard IoT Data Panel - Time Range Choice}\label{fig:grafana-iot-data-panel-time-range}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/measure-value.png}
-    \caption{Grafana Dashboard IoT Data Panel - Measure Value Choice}\label{fig:top-100-locations-most-affected}
+    \caption{Grafana Dashboard IoT Data Panel - Measure Value Choice}\label{fig:grafana-iot-data-panel-measure-value}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/filter.png}
-    \caption{Grafana Dashboard IoT Data Panel - Apply a Filter}\label{fig:top-100-locations-most-affected}
+    \caption{Grafana Dashboard IoT Data Panel - Apply a Filter}\label{fig:grafana-iot-data-panel-filter}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/export-2.png}
-    \caption{Grafana Dashboard IoT Data Panel - Export Values}\label{fig:top-100-locations-most-affected}
+    \caption{Grafana Dashboard IoT Data Panel - Export Values}\label{fig:grafana-iot-data-panel-export}
 \end{figure}
 
 \newpage
 \subsection{Load Test}
-
-The second query takes around 15 seconds, and the
-table~\ref{tab:query2-results-sample} shows a sample of the data calculated
-during the task. In order to evaluate performance, an equivalent script not
-using Spark was run. Execution time was 6 sec.
-The~\ref{sec:discussion-of-results} section will cover this point. Locations
-used to compute the statistics are shown on the map of
-figure~\ref{fig:top-100-locations-most-affected}. The area of the circles is
-proportional to how the location has been affected by the pandemic.
+In order to test the scalability of the system, a load test was performed using
+the Artillery load testing framework. The test consisted in simulating an
+increasing number of customers consuming the grafana dashboards simultaneously,
+to demonstrate the elasticity of the solution developed. The results of the
+test are shown in Figure~\ref{fig:load-test-result}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/autoscaling-test.png}
-    \caption{Load Test Result}\label{fig:top-100-locations-most-affected}
+    \caption{Load Test Result}\label{fig:load-test-result}
 \end{figure}
 
 \newpage
 
-\section{Discussion of Results}\label{sec:discussion-of-results}
-
-
 \newpage
 \section{Data Security and Sovereignty Considerations}
+Data security and sovereignty are critical in the management of environmental
+sensor data. Recent research trends in IoT security highlight the evolving
+landscape of threats and protections in this field
+\cite{CurrentResearchIoTSecurity2020}.
+
+\subsection{Data Security}
+In the realm of IoT, ensuring data security involves advanced encryption,
+robust access control, and maintaining data integrity. The systematic mapping
+study by \citeauthor{CurrentResearchIoTSecurity2020} provides insights into
+current methodologies and research directions in IoT security, relevant to
+environmental sensor data.
+
+\subsection{Data Sovereignty}
+Data sovereignty is influenced by varying international legislations, such as
+GDPR, affecting data storage and cross-border data transfer. The study by
+\citeauthor{CurrentResearchIoTSecurity2020} underscores the importance of
+understanding these legal complexities in IoT environments.
+
+\subsection{Specific Fields for Further Examination}
+Areas needing heightened attention include personal data protection,
+sensitivity of environmental data, and metadata security, as indicated by
+recent IoT security research trends \cite{CurrentResearchIoTSecurity2020}.
+
+Adhering to the latest security trends and regulatory frameworks is vital for
+the ethical management of environmental sensor data. The evolving research in
+IoT security serves as a guide for future developments in this field
+\cite{CurrentResearchIoTSecurity2020}.
 
 \newpage
 \chapter{Conclusion}
+
+In conclusion, this study presents a significant advancement in air quality
+monitoring through IoT technologies, demonstrating the effectiveness of the
+Grafana dashboard in data visualization and analysis. The successful load test
+indicates the system's scalability, catering to simultaneous user access.
+Addressing data security and sovereignty, the project highlights the importance
+of robust data management practices in IoT environments. While acknowledging
+certain limitations, this research lays a foundation for future explorations in
+IoT security and data handling. Overall, it contributes valuable insights to
+the field of environmental monitoring and data security, underscoring the
+potential of IoT in addressing critical ecological issues.
 
 \bibliographystyle{CranfieldNumbered}
 \bibliography{CUCitations}

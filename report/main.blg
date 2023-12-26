@@ -7,47 +7,46 @@ Reallocated global_strs (elt_size=200001) to 20 items from 10.
 Reallocated glb_str_end (elt_size=4) to 20 items from 10.
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Database file #1: CUCitations.bib
-Warning--I didn't find a database entry for "NYT"
 Warning--empty author and editor in sensorcommunity2023synchronization
-You've used 1 entry,
+You've used 2 entries,
             3506 wiz_defined-function locations,
-            696 strings with 4980 characters,
-and the built_in function-call counts, 481 in all, are:
-= -- 48
-> -- 4
-< -- 0
-+ -- 2
-- -- 1
-* -- 28
-:= -- 78
-add.period$ -- 2
-call.type$ -- 1
+            705 strings with 5274 characters,
+and the built_in function-call counts, 2300 in all, are:
+= -- 255
+> -- 19
+< -- 14
++ -- 6
+- -- 3
+* -- 159
+:= -- 274
+add.period$ -- 7
+call.type$ -- 2
 change.case$ -- 0
-chr.to.int$ -- 0
-cite$ -- 2
-duplicate$ -- 38
-empty$ -- 49
-format.name$ -- 1
-if$ -- 110
+chr.to.int$ -- 35
+cite$ -- 3
+duplicate$ -- 225
+empty$ -- 227
+format.name$ -- 4
+if$ -- 549
 int.to.chr$ -- 0
-int.to.str$ -- 1
-missing$ -- 7
-newline$ -- 7
-num.names$ -- 1
-pop$ -- 20
+int.to.str$ -- 2
+missing$ -- 17
+newline$ -- 13
+num.names$ -- 2
+pop$ -- 50
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 16
+skip$ -- 35
 stack$ -- 0
-substring$ -- 31
-swap$ -- 13
-text.length$ -- 0
+substring$ -- 314
+swap$ -- 39
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 1
-while$ -- 4
-width$ -- 2
-write$ -- 13
-(There were 2 warnings)
+while$ -- 13
+width$ -- 3
+write$ -- 27
+(There was 1 warning)

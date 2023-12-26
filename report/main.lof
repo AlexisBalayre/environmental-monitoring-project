@@ -11,8 +11,8 @@
 \contentsline {figure}{\numberline {2.9}{\ignorespaces Load Balancer Settings Screenshot\relax }}{14}{figure.caption.13}%
 \contentsline {figure}{\numberline {2.10}{\ignorespaces Data Distributing Pipeline Diagram\relax }}{15}{figure.caption.14}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Grafana Dashboard Main Panel\relax }}{17}{figure.caption.15}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Grafana Dashboard Main Panel\relax }}{17}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Grafana Dashboard: Measure Value Evolution, Max \& Mean AQI\relax }}{17}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Grafana Dashboard: AQI Map \& IoT Data\relax }}{17}{figure.caption.16}%
 \contentsline {figure}{\numberline {3.3}{\ignorespaces Grafana Dashboard AQI Map Panel\relax }}{18}{figure.caption.17}%
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Grafana Dashboard IoT Data Panel - Time Range Choice\relax }}{18}{figure.caption.18}%
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Grafana Dashboard IoT Data Panel - Measure Value Choice\relax }}{19}{figure.caption.19}%

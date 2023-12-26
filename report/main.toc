@@ -27,25 +27,27 @@
 \contentsline {section}{\numberline {3.1}Results}{16}{section.3.1}%
 \contentsline {subsection}{\numberline {3.1.1}Accessing the Data - Grafana Dashboard}{16}{subsection.3.1.1}%
 \contentsline {subsection}{\numberline {3.1.2}Load Test}{21}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}Discussion of Results}{22}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Data Security and Sovereignty Considerations}{23}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Conclusion}{24}{chapter.4}%
-\contentsline {chapter}{References}{25}{chapter*.23}%
-\contentsline {chapter}{\numberline {A}Documentation}{26}{appendix.A}%
-\contentsline {section}{\numberline {A.A}Project tree}{26}{section.1.A.A}%
-\contentsline {section}{\numberline {A.B}Getting Started}{26}{section.1.A.B}%
-\contentsline {section}{\numberline {A.C}Detailed Features of Functions}{27}{section.1.A.C}%
-\contentsline {chapter}{\numberline {B}Source Codes}{28}{appendix.B}%
-\contentsline {section}{\numberline {B.A}Ingestion, Processing \& Storing Pipeline Source Code}{28}{section.2.B.A}%
-\contentsline {section}{\numberline {B.B}Data Collecting Source Code}{30}{section.2.B.B}%
-\contentsline {section}{\numberline {B.C}Data Processing Source Code}{31}{section.2.B.C}%
-\contentsline {section}{\numberline {B.D}Data Storing Source Code}{34}{section.2.B.D}%
-\contentsline {section}{\numberline {B.E}Scripts \& Services Source Codes }{38}{section.2.B.E}%
-\contentsline {subsection}{\numberline {B.E.1}Scripts}{38}{subsection.2.B.E.1}%
-\contentsline {subsection}{\numberline {B.E.2}Services}{39}{subsection.2.B.E.2}%
-\contentsline {subsubsection}{\numberline {B.E.2.1}Get IAM Credentials Service}{39}{subsubsection.2.B.E.2.1}%
-\contentsline {subsubsection}{\numberline {B.E.2.2}Spark Python Job Service}{39}{subsubsection.2.B.E.2.2}%
-\contentsline {subsubsection}{\numberline {B.E.2.3}Grafana Server Service}{40}{subsubsection.2.B.E.2.3}%
-\contentsline {section}{\numberline {B.F}Load Test Source Codes }{41}{section.2.B.F}%
-\contentsline {subsection}{\numberline {B.F.1}Artillery Load Test Configuration File}{41}{subsection.2.B.F.1}%
-\contentsline {subsection}{\numberline {B.F.2}Instances Monitoring Script}{42}{subsection.2.B.F.2}%
+\contentsline {section}{\numberline {3.2}Data Security and Sovereignty Considerations}{22}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Data Security}{22}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Data Sovereignty}{22}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Specific Fields for Further Examination}{22}{subsection.3.2.3}%
+\contentsline {chapter}{\numberline {4}Conclusion}{23}{chapter.4}%
+\contentsline {chapter}{References}{24}{chapter*.23}%
+\contentsline {chapter}{\numberline {A}Documentation}{25}{appendix.A}%
+\contentsline {section}{\numberline {A.A}Project tree}{25}{section.1.A.A}%
+\contentsline {section}{\numberline {A.B}Getting Started}{25}{section.1.A.B}%
+\contentsline {section}{\numberline {A.C}Detailed Features of Functions}{26}{section.1.A.C}%
+\contentsline {chapter}{\numberline {B}Source Codes}{27}{appendix.B}%
+\contentsline {section}{\numberline {B.A}Ingestion, Processing \& Storing Pipeline Source Code}{27}{section.2.B.A}%
+\contentsline {section}{\numberline {B.B}Data Collecting Source Code}{29}{section.2.B.B}%
+\contentsline {section}{\numberline {B.C}Data Processing Source Code}{30}{section.2.B.C}%
+\contentsline {section}{\numberline {B.D}Data Storing Source Code}{33}{section.2.B.D}%
+\contentsline {section}{\numberline {B.E}Scripts \& Services Source Codes }{37}{section.2.B.E}%
+\contentsline {subsection}{\numberline {B.E.1}Scripts}{37}{subsection.2.B.E.1}%
+\contentsline {subsection}{\numberline {B.E.2}Services}{38}{subsection.2.B.E.2}%
+\contentsline {subsubsection}{\numberline {B.E.2.1}Get IAM Credentials Service}{38}{subsubsection.2.B.E.2.1}%
+\contentsline {subsubsection}{\numberline {B.E.2.2}Spark Python Job Service}{38}{subsubsection.2.B.E.2.2}%
+\contentsline {subsubsection}{\numberline {B.E.2.3}Grafana Server Service}{39}{subsubsection.2.B.E.2.3}%
+\contentsline {section}{\numberline {B.F}Load Test Source Codes }{40}{section.2.B.F}%
+\contentsline {subsection}{\numberline {B.F.1}Artillery Load Test Configuration File}{40}{subsection.2.B.F.1}%
+\contentsline {subsection}{\numberline {B.F.2}Instances Monitoring Script}{41}{subsection.2.B.F.2}%

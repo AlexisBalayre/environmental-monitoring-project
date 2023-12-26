@@ -1,0 +1,53 @@
+This is BibTeX, Version 0.99d (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: CranfieldNumbered.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: CUCitations.bib
+Warning--I didn't find a database entry for "CurrentResearchIoTSecurity2020"
+Warning--empty author and editor in sensorcommunity2023synchronization
+You've used 1 entry,
+            3506 wiz_defined-function locations,
+            696 strings with 5034 characters,
+and the built_in function-call counts, 481 in all, are:
+= -- 48
+> -- 4
+< -- 0
++ -- 2
+- -- 1
+* -- 28
+:= -- 78
+add.period$ -- 2
+call.type$ -- 1
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 2
+duplicate$ -- 38
+empty$ -- 49
+format.name$ -- 1
+if$ -- 110
+int.to.chr$ -- 0
+int.to.str$ -- 1
+missing$ -- 7
+newline$ -- 7
+num.names$ -- 1
+pop$ -- 20
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 16
+stack$ -- 0
+substring$ -- 31
+swap$ -- 13
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 4
+width$ -- 2
+write$ -- 13
+(There were 2 warnings)
