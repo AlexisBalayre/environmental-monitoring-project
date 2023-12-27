@@ -15,16 +15,16 @@ config:
       arrivalRate: 1
       name: "Stage 3"
     - pause: 30
-    - duration: 60
-      arrivalRate: 1
+    - duration: 50
+      arrivalRate: 2
       name: "Stage 4"
     - pause: 60
-    - duration: 50
-      arrivalRate: 1
+    - duration: 60
+      arrivalRate: 2
       name: "Stage 5"
     - pause: 60
-    - duration: 50
-      arrivalRate: 1
+    - duration: 80
+      arrivalRate: 2
       name: "Stage 6"
 
   # Load & configure a couple of useful plugins

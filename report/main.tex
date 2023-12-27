@@ -201,17 +201,30 @@ environmental data.
 
 \chapter{Methodologies}\label{chap:one}
 
+\section{Architecture of the Project}
+The project is divided into two main pipelines:
+\begin{enumerate}
+    \item \textbf{Data Collecting, Processing \& Storing Pipeline:} This pipeline is responsible for collecting, processing and storing the data from the IoT sensors in a time-series database.
+    \item \textbf{Data Distributing Pipeline:} This pipeline is responsible for distributing the data to the users through a Grafana dashboard and for monitoring the system.
+\end{enumerate}
+The figure~\ref{fig:project-pipeline} below illustrates the project pipeline.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{images/pipeline.png}
+    \caption{Project Architecture Diagram}\label{fig:project-pipeline}
+\end{figure}
+
+\newpage
 \section{Data Collecting, Processing \& Storing}
+\subsection{Overview of the first pipeline architecture}
 
-\subsection{Overview of the Pipeline Architecture}
-
-In the \textbf{Data Collecting} phase, the latest dataset is obtained from its
-source, marking the commencement of the data pipeline. Following this, the
+In the \textbf{Data Collecting} phase, the last set of data is obtained from
+its source, marking the start of the data pipeline. Following this, the
 \textbf{Data Processing} phase takes over, where the data undergoes formatting
 and calculation of the Air Quality Index (AQI) for each particulate matter
 sensor. The final phase, \textbf{Data Storing}, involves meticulous storage of
-data from each sensor in a time-series database, ensuring its integrity and
-accessibility for future use.
+data from each sensor in a time-series database.
 
 For a detailed visual representation of this pipeline, refer to
 Figure~\ref{fig:data-collecting-processing-storing-pipeline}, which illustrates
@@ -246,10 +259,10 @@ optimised handling and processing. This operation, executed by the
 \texttt{fetch\_sensors\_data} function, is located within the
 \texttt{collecting.py} script (see Appendix~\ref{appendix:collecting} for
 detailed code). In particular, this function is programmed to run at a constant
-interval of every 10 seconds, ensuring a regular and up-to-date flow of data
-from the sensors. This systematic approach not only streamlines the data
-collection process, but also improves the reliability and timeliness of the
-information collected.
+interval of 10 seconds, ensuring a regular and up-to-date flow of data from the
+sensors. This systematic approach not only streamlines the data collection
+process, but also improves the reliability and timeliness of the information
+collected.
 
 \subsection{Data Processing}
 
@@ -380,8 +393,12 @@ involves several key steps, from configuring the EC2 instance to running and
 managing the pipeline. The process is described below:
 
 \begin{enumerate}
-    \item \textbf{EC2 Instance Configuration:} An EC2 t4g.small instance has been configured to host the data collecting, processing \& storing pipeline. This type of instance was chosen for its balance between performance and energy efficiency. These instances, based on ARM architecture, are ideal for light to moderate workloads, which correspond to the requirements of continuous data processing. In addition, Apache Spark has been installed on this instance to process the data collected. Spark was chosen for its ability to process data in memory and in parallel, optimising performance for data processing workloads.
-    \item \textbf{Setting Up Automated Services:} Two systemd services were then set up to automate the essential tasks: The \texttt{get\_iam\_credentials.service} (see Appendix~\ref{appendix:get-iam-credentials-service}) executes \texttt{get\_iam\_credentials.sh} (see Appendix~\ref{appendix:get-iam-credentials}). This script retrieves the instance's IAM credentials, enabling secure integration with other AWS services. The \texttt{spark\_python\_job.service} (see Appendix~\ref{appendix:spark-python-job-service}) launches \texttt{start\_spark\_job.sh} (see Appendix~\ref{appendix:start-spark-job}), which starts the main data processing script (see Appendix~\ref{appendix:main}). This script orchestrates the collection, processing (AQI calculation) and storage of IoT sensor data. These services are activated each time the instance is started.
+    \item \textbf{EC2 Instance Configuration:} An EC2 t4g.small instance with Ubuntu~\ref{fig:ec2-instance-configuration} has been configured to host the data collecting, processing \& storing pipeline. This type of instance was chosen for its balance between performance and energy efficiency. These instances, based on ARM architecture, are ideal for light to moderate workloads, which correspond to the requirements of continuous data processing. In addition, Apache Spark has been installed on this instance to process the data collected.
+    \item \textbf{Setting Up Automated Services:} Two systemd services, which are activated each time the instance is started, were then set up to automate the following tasks:
+          \begin{itemize}
+              \item \textbf{get\_iam\_credentials.service:} This service (See Appendix~\ref{appendix:get-iam-credentials-service}) executes \texttt{get\_iam\_credentials.sh} (See Appendix~\ref{appendix:get-iam-credentials}). This script retrieves the instance's IAM credentials, enabling secure integration with other AWS services.
+              \item \textbf{spark\_python\_job.service:} This service (See Appendix~\ref{appendix:spark-python-job-service}) launches \texttt{start\_spark\_job.sh} (See Appendix~\ref{appendix:start-spark-job}), which starts the script responsible for the collection, processing and storage of IoT data (See Appendix~\ref{appendix:main}).
+          \end{itemize}
 \end{enumerate}
 
 \begin{figure}[H]
@@ -393,7 +410,7 @@ managing the pipeline. The process is described below:
 \newpage
 \section{Data Distributing}
 
-\subsection{Overview of the Pipeline Architecture}
+\subsection{Overview of the second pipeline architecture}
 The second pipeline in this project is dedicated to the effective distribution
 of processed data. This pipeline is comprised of several key components, each
 integral to the efficient dissemination and monitoring of data.
@@ -427,7 +444,7 @@ Distributing Pipeline.
 The Auto Scaling Group plays a crucial role in dynamically managing the EC2
 instances of the Data Distributing Pipeline. This section outlines the
 configurations for the Auto Scaling Group and its associated components. The
-figure below\cite{fig:auto-scaling-group-pipeline} illustrates the Auto Scaling
+figure below~\ref{fig:auto-scaling-group-pipeline} illustrates the Auto Scaling
 Group Pipeline.
 
 \begin{figure}[H]
@@ -492,7 +509,7 @@ The Auto Scaling Group employs the following policies for scaling:
 \subsubsection{Target Group Configuration}
 
 A target group was created to distribute traffic between the EC2 instances of
-the Auto Scaling Group. 
+the Auto Scaling Group.
 
 \begin{figure}[H]
     \centering
@@ -513,15 +530,6 @@ dashboard is accessible to users through a user-friendly URL.
 \end{figure}
 
 \newpage
-\section{Pipeline of the Project}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{images/pipeline.png}
-    \caption{Data Distributing Pipeline Diagram}
-\end{figure}
-
-\newpage
 \chapter{Results \& Discussion}
 
 \section{Results}
@@ -537,11 +545,11 @@ analyse air quality data. Users can customise the time interval, measurement
 value and location ID. The dashboard consists of five main panels, each
 providing unique information::
 \begin{enumerate}
-    \item \textbf{Measure Value Evolution:} This panel shows the evolution of the selected measure value in the selected location over the selected time range.
-    \item \textbf{Max AQI:} This panel shows the maximum AQI value in the selected location over the selected time range.
-    \item \textbf{Mean AQI:} This panel shows the mean AQI value in the selected location over the selected time range.
-    \item \textbf{AQI Map:} This panel shows the AQI value of each location on a map.
-    \item \textbf{IoT Data:} This panel shows all the data collected by the IoT sensors related to the selected
+    \item \textbf{Measure Value Evolution:} This panel shows the evolution of the selected measure value in the selected location over the selected time range. This panel can be seen in Figure~\ref{fig:grafana-main-panel-1}.
+    \item \textbf{Max AQI:} This panel shows the maximum AQI value in the selected location over the selected time range. This panel can be seen in Figure~\ref{fig:grafana-main-panel-1}.
+    \item \textbf{Mean AQI:} This panel shows the mean AQI value in the selected location over the selected time range. This panel can be seen in Figure~\ref{fig:grafana-main-panel-1}.
+    \item \textbf{AQI Map:} This panel shows the AQI value of each location on a map. This panel can be seen in Figure~\ref{fig:grafana-main-panel-2}.
+    \item \textbf{IoT Data:} This panel shows all the data collected by the IoT sensors related to the selected measure value and time range. This panel can be seen in Figure~\ref{fig:grafana-main-panel-2}.
 \end{enumerate}
 
 \begin{figure}[H]
@@ -556,30 +564,44 @@ providing unique information::
     \caption{Grafana Dashboard: AQI Map \& IoT Data}\label{fig:grafana-main-panel-2}
 \end{figure}
 
+\newpage
+As shown in Figure~\ref{fig:grafana-aqi-map-panel}, the AQI Map panel displays
+the AQI value of each location on a map. The AQI value is represented by a
+colour, depending to the range it belongs to. The AQI value is also displayed
+when hovering over a location.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/grafana-4.png}
     \caption{Grafana Dashboard AQI Map Panel}\label{fig:grafana-aqi-map-panel}
 \end{figure}
 
+As required, the Grafana dashboard enables users to customise the time
+interval, as shown in Figure~\ref{fig:grafana-iot-data-panel-time-range}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/time-range.png}
     \caption{Grafana Dashboard IoT Data Panel - Time Range Choice}\label{fig:grafana-iot-data-panel-time-range}
 \end{figure}
 
+\newpage
+It is also possible to choose the measure value to display in the IoT Data panel, as shown in Figure~\ref{fig:grafana-iot-data-panel-measure-value}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/measure-value.png}
     \caption{Grafana Dashboard IoT Data Panel - Measure Value Choice}\label{fig:grafana-iot-data-panel-measure-value}
 \end{figure}
 
+Moreove, it is possible to apply a filter to the data displayed in the IoT Data
+panel. This can be done by clicking on the funnel icon, as shown in
+Figure~\ref{fig:grafana-iot-data-panel-filter}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/filter.png}
     \caption{Grafana Dashboard IoT Data Panel - Apply a Filter}\label{fig:grafana-iot-data-panel-filter}
 \end{figure}
 
+\newpage
+In addition, it is possible to export the data displayed in the IoT Data panel to a CSV file. This can be done by clicking on the \texttt{Download CSV} button, as shown in Figure~\ref{fig:grafana-iot-data-panel-export}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/export-2.png}
@@ -589,18 +611,42 @@ providing unique information::
 \newpage
 \subsection{Load Test}
 In order to test the scalability of the system, a load test was performed using
-the Artillery load testing framework. The test consisted in simulating an
-increasing number of customers consuming the grafana dashboards simultaneously,
-to demonstrate the elasticity of the solution developed. The results of the
-test are shown in Figure~\ref{fig:load-test-result}.
+the Artillery load testing tool. The test consisted in simulating an increasing
+number of customers consuming the grafana dashboards simultaneously, to
+demonstrate the elasticity of the solution developed. The results of the test
+are shown in Figure~\ref{fig:load-test-result}.
+
+\subsubsection{Artillery Load Test}
+The load test was performed using the Artillery load testing script available
+in Appendix~\ref{appendix:artillery-load-test}. Here are the steps of the load
+test:
+\begin{enumerate}
+    \item \textbf{Stage 1:} 1 new user is added every second for 50 seconds.
+    \item \textbf{Pause:} No new users are added for 30 seconds.
+    \item \textbf{Stage 2:} 1 new user is added every second for 60 seconds.
+    \item \textbf{Pause:} No new users are added for 60 seconds.
+    \item \textbf{Stage 3:} 1 new user is added every second for 60 seconds.
+    \item \textbf{Pause:} No new users are added for 30 seconds.
+    \item \textbf{Stage 4:} 2 new users are added every second for 50 seconds.
+    \item \textbf{Pause:} No new users are added for 60 seconds.
+    \item \textbf{Stage 5:} 2 new users are added every second for 60 seconds.
+    \item \textbf{Pause:} No new users are added for 60 seconds.
+    \item \textbf{Stage 6:} 2 new users are added every second for 80 seconds.
+\end{enumerate}
+Each user is configured to access 2 endpoints of the Grafana dashboard 100 times. Besides, this test was performed several times to ensure the reliability of the results.
+
+\subsubsection{Auto Scaling Group Behaviour Monitoring}
+The Auto Scaling Group behaviour was monitored during the load test thanks to a
+Python script available in Appendix~\ref{appendix:monitoring}. The monitoring
+data is available in the \texttt{metrics.csv} file in the \texttt{test} folder.
+Below~\ref{fig:load-test-result} is a graph showing the CPU utilisation of the
+Auto Scaling Group during the load test.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/autoscaling-test.png}
     \caption{Load Test Result}\label{fig:load-test-result}
 \end{figure}
-
-\newpage
 
 \newpage
 \section{Data Security and Sovereignty Considerations}
@@ -715,60 +761,61 @@ potential of IoT in addressing critical ecological issues.
 
 \chapter{Source Codes}
 \begin{subappendices}
-    \section{Ingestion, Processing \& Storing Pipeline Source Code}
-    \lstinputlisting[style=pythonstyle]{../main.py}\label{appendix:main}
+    \section{Ingestion, Processing \& Storing Pipeline Source Code}\label{appendix:main}
+    \lstinputlisting[style=pythonstyle]{../main.py}
 
     \newpage
-    \section{Data Collecting Source Code}
-    \lstinputlisting[style=pythonstyle]{../lib/collecting.py}\label{appendix:collecting}
+    \section{Data Collecting Source Code}\label{appendix:collecting}
+    \lstinputlisting[style=pythonstyle]{../lib/collecting.py}
 
     \newpage
-    \section{Data Processing Source Code}
-    \lstinputlisting[style=pythonstyle]{../lib/processing.py}\label{appendix:processing}
+    \section{Data Processing Source Code}\label{appendix:processing}
+    \lstinputlisting[style=pythonstyle]{../lib/processing.py}
 
     \newpage
-    \section{Data Storing Source Code}
-    \lstinputlisting[style=pythonstyle]{../lib/storing.py}\label{appendix:storing}
+    \section{Data Storing Source Code}\label{appendix:storing}
+    \lstinputlisting[style=pythonstyle]{../lib/storing.py}
 
     \newpage
     \section{Scripts \& Services Source Codes }
     \subsection{Scripts}
 
     Script used by the \texttt{get\_iam\_credentials} service to retrieve the IAM
-    credentials from the metadata server.
-    \lstinputlisting[style=bashstyle]{../scripts/get_iam_credentials.sh}\label{appendix:get-iam-credentials}
+    credentials from the metadata server.\label{appendix:get-iam-credentials}
+    \lstinputlisting[style=bashstyle]{../scripts/get_iam_credentials.sh}
 
     Script used by the \texttt{spark\_python\_job} service to run the Python Spark
-    job.\lstinputlisting[style=bashstyle]{../scripts/start_spark_job.sh}\label{appendix:start-spark-job}
+    job.\label{appendix:start-spark-job}
+    \lstinputlisting[style=bashstyle]{../scripts/start_spark_job.sh}
 
     \newpage
     \subsection{Services}
 
     \subsubsection{Get IAM Credentials Service}
     Service used by the Ubuntu EC2 instance to retrieve the IAM credentials from
-    the metadata server.
-    \lstinputlisting[style=servicestyle]{../services/get_iam_credentials.service}\label{appendix:get-iam-credentials-service}
+    the metadata server.\label{appendix:get-iam-credentials-service}
+    \lstinputlisting[style=servicestyle]{../services/get_iam_credentials.service}
 
     \subsubsection{Spark Python Job Service}
     Service used by the Ubuntu EC2 instance to run the Python Spark job (Data
-    Collecting, Processing and Storing).
-    \lstinputlisting[style=servicestyle]{../services/spark_python_job.service}\label{appendix:spark-python-job-service}
+    Collecting, Processing and Storing).\label{appendix:spark-python-job-service}
+    \lstinputlisting[style=servicestyle]{../services/spark_python_job.service}
 
     \newpage
     \subsubsection{Grafana Server Service}
     Service used by the Linux EC2 instances to run the Grafana server (Data
-    Distributing).
-    \lstinputlisting[style=servicestyle]{../services/grafana_server.service}\label{appendix:grafana-server-service}
+    Distributing).\label{appendix:grafana-server-service}
+    \lstinputlisting[style=servicestyle]{../services/grafana_server.service}
 
     \newpage
     \section{Load Test Source Codes }
 
-    \subsection{Artillery Load Test Configuration File}
-    \lstinputlisting[style=ymlstyle]{../test/artillery_load_test.yml}\label{appendix:artillery-load-test}
+    \subsection{Artillery Load Test Configuration File}\label{appendix:artillery-load-test}
+    \lstinputlisting[style=ymlstyle]{../test/artillery_load_test.yml}
 
     \newpage
-    \subsection{Instances Monitoring Script}
-    \lstinputlisting[style=pythonstyle]{../test/monitoring.py}\label{appendix:monitoring}
+    \subsection{Instances Monitoring Script}\label{appendix:monitoring}
+    \lstinputlisting[style=pythonstyle]{../test/monitoring.py}
 \end{subappendices}
 
 \end{document}
