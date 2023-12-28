@@ -246,8 +246,8 @@ temperature, humidity and pressure. On average, the sensors send new data every
 network offers two main API endpoints for accessing their environmental data:
 
 \begin{enumerate}
-    \item \textbf{5-Minute Averaged Data API:} This API provides data averaged over the last 5 minutes for each sensor. This is useful for near real-time analysis or immediate air quality assessments, particularly in test or active monitoring contexts.
-    \item \textbf{24 Hour Averaged Data API:} This API provides data averaged over the last 24 hours for each sensor. It is particularly suited to analysing daily trends and understanding environmental changes over a longer period.
+    \item \textbf{5-Minute Averaged Data API:} This API provides data averaged over the last 5 minutes for each sensor.
+    \item \textbf{24 Hour Averaged Data API:} This API provides data averaged over the last 24 hours for each sensor.
 \end{enumerate}
 
 \subsubsection{Ingestion Script}
@@ -260,9 +260,7 @@ optimised handling and processing. This operation, executed by the
 \texttt{collecting.py} script (see Appendix~\ref{appendix:collecting} for
 detailed code). In particular, this function is programmed to run at a constant
 interval of 10 seconds, ensuring a regular and up-to-date flow of data from the
-sensors. This systematic approach not only streamlines the data collection
-process, but also improves the reliability and timeliness of the information
-collected.
+sensors.
 
 \subsection{Data Processing}
 
@@ -304,26 +302,14 @@ thereby accelerating the computation process.
 \end{table}
 
 \subsubsection{Leveraging Apache Spark}
-The incorporation of Apache Spark is central to the data processing
-methodology. Its distributed computing framework is adept at handling large
-datasets, characteristic of environmental sensor data. Spark's features are
-leveraged as follows:
+Apache Spark is a distributed computing framework that excels at managing and
+processing large-scale data sets. Using Apache Spark improves data processing
+capabilities in several ways:
 
 \begin{enumerate}
-    \item Spark's architecture is uniquely designed to manage the fluctuating volume and
-          nature of IoT sensor data. This scalability is critical for ensuring the
-          efficient processing of data in real-time, which is essential for timely AQI
-          calculation.
+    \item \textbf{Scalability for Varying Data Volumes:} Apache Spark's scalable architecture is optimally designed to handle the varying volumes and complexity of IoT sensor data. This scalability is crucial for real-time data processing, ensuring fast and efficient AQI calculations.
 
-    \item The distributed nature of Spark facilitates the parallel processing of tasks
-          across multiple nodes. This capability is vital for the simultaneous processing
-          of AQI calculations from multiple sensors, enhancing the efficiency and speed
-          of data computation.
-
-    \item This methodical approach, leveraging Spark's scalability and distributed
-          processing capabilities, ensures that the project achieves prompt and accurate
-          AQI values, which are crucial for real-time air quality monitoring and
-          assessment.
+    \item \textbf{Parallel processing between nodes:} The distributed nature of Spark enables parallel processing of computational tasks across multiple nodes. This functionality is essential for the simultaneous processing of AQI calculations from a range of sensors, significantly increasing the speed and efficiency of data processing.
 \end{enumerate}
 
 \subsection{Data Storing}
@@ -333,19 +319,13 @@ The difficulty with this project lies in the efficient management of data
 storage. Each sensor can measure a variety of data, making the structure of a
 single relational database too complex and inefficient. This complexity
 increases as the volume of data increases, requiring the creation of multiple
-linked tables. This structural challenge poses a performance problem,
-particularly when it comes to processing and analysing large quantities of data
-in real time, a crucial aspect for applications such as air quality or
-environmental monitoring.
+linked tables.
 
 Faced with these challenges, time series databases (TSDBs) are emerging as an
 optimal solution. Unlike traditional relational databases, TSDBs are
 specifically designed to manage time-series data, such as that from IoT
 sensors. They offer better performance in tracking, monitoring and aggregating
-data over time. In addition, TSDBs such as Amazon Timestream stand out for
-their ability to ingest data quickly and process large volumes efficiently,
-while ensuring regular updates and in-depth analysis, essential aspects for
-applications such as Air Quality Index analysis.
+data over time.
 
 Amazon Timestream is a good choice for this project. As a cloud-native
 time-series database, it offers superior time-series management capabilities
@@ -353,14 +333,13 @@ tailored to IoT sensor data. What sets Amazon Timestream apart is the speed
 with which it ingests data and its efficiency in processing large volumes of
 data, enabling regular updates and in-depth analysis. Its ability to adapt to
 changing workloads ensures consistent performance, a major advantage for
-real-time data management. What's more, its advanced security features meet
-strict standards of confidentiality and data sovereignty, an essential
+real-time data management.
 
 \subsubsection{Storing Script}
 The data storing process represents the final phase in the IoT data collecting
-and processing pipeline. Once the Air Quality Index (AQI) has been calculated,
-the data must be stored efficiently and securely to allow subsequent analysis
-and real-time consultation. The \texttt{storing.py} script (see
+and processing pipeline. Once the AQI has been calculated, the data must be
+stored efficiently and securely to allow subsequent analysis and real-time
+consultation. The \texttt{storing.py} script (see
 Appendix~ref{appendix:storing} for detailed code) is designed to interact with
 the Amazon Timestream database.
 
@@ -382,18 +361,15 @@ In conclusion, the integration of Spark with Amazon Timestream offers a
 powerful solution for storing environmental sensor data. Spark's ability to
 process and filter data in a distributed manner aligns perfectly with
 Timestream's high availability and auto-scaling capabilities, ensuring a
-resilient, high-performance data infrastructure. This arrangement enables
-reliable data storage and rapid retrieval, which are essential for continuous
-monitoring of air quality and rapid responses to environmental issues.
+resilient, high-performance data infrastructure.
 
-\newpage
 \subsection{Pipeline Implementation on AWS}
 Setting up an IoT data processing pipeline on Amazon Web Services (AWS)
 involves several key steps, from configuring the EC2 instance to running and
 managing the pipeline. The process is described below:
 
 \begin{enumerate}
-    \item \textbf{EC2 Instance Configuration:} An EC2 t4g.small instance with Ubuntu~\ref{fig:ec2-instance-configuration} has been configured to host the data collecting, processing \& storing pipeline. This type of instance was chosen for its balance between performance and energy efficiency. These instances, based on ARM architecture, are ideal for light to moderate workloads, which correspond to the requirements of continuous data processing. In addition, Apache Spark has been installed on this instance to process the data collected.
+    \item \textbf{EC2 Instance Configuration:} A t4g.small EC2 instance with Ubuntu~\ref{fig:ec2-instance-configuration} has been configured to host the data collecting, processing \& storing pipeline. This type of instance was chosen for its balance between performance and energy efficiency. In addition, Apache Spark has been installed on this instance to process the data collected.
     \item \textbf{Setting Up Automated Services:} Two systemd services, which are activated each time the instance is started, were then set up to automate the following tasks:
           \begin{itemize}
               \item \textbf{get\_iam\_credentials.service:} This service (See Appendix~\ref{appendix:get-iam-credentials-service}) executes \texttt{get\_iam\_credentials.sh} (See Appendix~\ref{appendix:get-iam-credentials}). This script retrieves the instance's IAM credentials, enabling secure integration with other AWS services.
@@ -411,21 +387,21 @@ managing the pipeline. The process is described below:
 \section{Data Distributing}
 
 \subsection{Overview of the second pipeline architecture}
-The second pipeline in this project is dedicated to the effective distribution
-of processed data. This pipeline is comprised of several key components, each
-integral to the efficient dissemination and monitoring of data.
+The second pipeline of this project focuses on the efficient distribution and
+monitoring of processed data, comprising several essential components:
 
 \begin{enumerate}
     \item \textbf{Internet Gateway}: \\
-          The user's interaction with the system begins at the secure Internet gateway. This gateway serves as the primary access point to the system, directing users to the Grafana dashboards through a specified URL. This approach ensures secure and controlled access to the air quality data visualisations.
+          This is the entry point for user interaction, directing them to the Grafana dashboards through specific URLs.
 
     \item \textbf{Load Balancer}: \\
-          At the heart of the data distribution pipeline is the Load Balancer. This component is tasked with evenly distributing incoming traffic across multiple EC2 instances. The Load Balancer plays a crucial role in balancing the workload and optimising resource utilisation, ensuring that no single instance is overwhelmed, thus maintaining smooth and efficient data flow.
+          Central to this pipeline, the Load Balancer evenly distributes the workload across EC2 instances.
 
     \item \textbf{Grafana Dashboard Access}: \\
-          For data visualisation, the Grafana dashboard is utilised. Hosted on a Load Balancer, the dashboard presents the data stored in the Amazon Timestream database. It offers real-time visualisation of air quality metrics, enabling users to interact with and analyse the data in a user-friendly manner. This real-time access is critical for timely decision-making and assessment of air quality trends.
+          Hosted on EC2 instances, the Grafana dashboard provides an interactive platform for data visualization.
+
     \item \textbf{CloudWatch Monitoring}: \\
-          Finally, the AWS CloudWatch service continuously monitors the overall system performance. It specifically tracks the CPU utilization of all EC2 instances within the Auto Scaling Group. Based on the aggregated CPU usage data, CloudWatch dynamically adjusts the system's resources. This adaptive scaling is essential for maintaining the balance between system efficiency and cost-effectiveness, ensuring the infrastructure responds appropriately to varying loads.
+          AWS CloudWatch actively monitors system performance and dynamically adjusts resources to maintain system efficiency and stability.
 \end{enumerate}
 
 For a comprehensive visual overview of this pipeline, please refer to
@@ -472,8 +448,7 @@ The launch template defines the specifications for deploying EC2 instances
 within the Auto Scaling Group. It incorporates the custom AMI and delineates
 instance type, security group, key pair, and user data. This template deploys
 t2.micro instances, which are ideal for light workloads, such as hosting the
-Grafana server. The template also specifies the security group, which allows
-inbound traffic on port 3000, enabling access to the Grafana dashboard.
+Grafana server.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/launch-template.png}
@@ -639,8 +614,23 @@ Each user is configured to access 2 endpoints of the Grafana dashboard 100 times
 The Auto Scaling Group behaviour was monitored during the load test thanks to a
 Python script available in Appendix~\ref{appendix:monitoring}. The monitoring
 data is available in the \texttt{metrics.csv} file in the \texttt{test} folder.
-Below~\ref{fig:load-test-result} is a graph showing the CPU utilisation of the
-Auto Scaling Group during the load test.
+For enhanced data interpretation and visualisation, a Jupyter Notebook was
+developed was developed to provide a graphical representation of system
+performance during load testing, as shown in Figure~\ref{fig:load-test-result},
+which illustrates the dynamic scaling actions triggered by fluctuating demand
+on system resources.
+
+At the start of the load test, only one instance was active. The data shows
+that this instance quickly reached its processing capacity. In response, the
+auto-scaling group launched additional instances, as evidenced by the
+subsequent reductions in CPU usage after each new instance was integrated into
+the service architecture. Once demand calmed and CPU utilisation fell below the
+42\% threshold, the Auto Scaling Group effectively deprovisioned the excess
+instances. This strategic downscaling is essential to optimise resource
+utilisation and cost management. The figure highlights the elasticity of the
+system, with the Auto Scaling Group skilfully modulating the number of active
+instances according to the real-time workload, maintaining system stability and
+performance efficiency.
 
 \begin{figure}[H]
     \centering
@@ -650,47 +640,66 @@ Auto Scaling Group during the load test.
 
 \newpage
 \section{Data Security and Sovereignty Considerations}
-Data security and sovereignty are critical in the management of environmental
-sensor data. Recent research trends in IoT security highlight the evolving
-landscape of threats and protections in this field
-\cite{CurrentResearchIoTSecurity2020}.
+Data security and sovereignty are critical elements in managing environmental
+sensor data, reflecting the importance of addressing evolving threats and
+protection mechanisms in IoT as highlighted in recent research.
 
 \subsection{Data Security}
-In the realm of IoT, ensuring data security involves advanced encryption,
-robust access control, and maintaining data integrity. The systematic mapping
-study by \citeauthor{CurrentResearchIoTSecurity2020} provides insights into
-current methodologies and research directions in IoT security, relevant to
-environmental sensor data.
+Data security for environmental sensors involves protecting sensitive data from
+unauthorised access, alteration, theft or destruction. The integration of IoT
+devices into wider networks introduces unique vulnerabilities. It is imperative
+to secure these devices against cyber threats, ensuring that the data they
+transmit and their operational integrity are protected. This includes
+protecting devices, their firmware and the networks to which they connect from
+unauthorised access and cyber attacks~\cite{CurrentResearchIoTSecurity2020}.
+
+In addition to device and network security, managing the vast volumes of data
+generated by these sensors is crucial. The use of cloud-based solutions offers
+scalability and flexibility, but also raises significant security issues. The
+implementation of secure data transfer mechanisms, encrypted storage solutions
+and regular vulnerability assessments are essential to preserve data integrity
+and confidentiality. Compliance with international security standards and best
+practice ensures that data storage and processing meet the highest levels of
+security.
 
 \subsection{Data Sovereignty}
-Data sovereignty is influenced by varying international legislations, such as
-GDPR, affecting data storage and cross-border data transfer. The study by
-\citeauthor{CurrentResearchIoTSecurity2020} underscores the importance of
-understanding these legal complexities in IoT environments.
+Data sovereignty concerns the legal and regulatory aspects of data management,
+particularly with regard to the geographical location of data. The
+transnational nature of IoT deployments requires a thorough understanding of
+the various international and regional laws governing data privacy and
+protection. For example, the physical location of servers may subject data to
+the legal jurisdiction of that country, which affects the level of data
+protection and compliance obligations.
 
-\subsection{Specific Fields for Further Examination}
-Areas needing heightened attention include personal data protection,
-sensitivity of environmental data, and metadata security, as indicated by
-recent IoT security research trends \cite{CurrentResearchIoTSecurity2020}.
+In addition, the transmission and processing of data across borders must comply
+with international data protection agreements, such as the General Data
+Protection Regulation (GDPR) in the European Union. This includes ensuring that
+data flows comply with the legal requirements of all countries involved.
 
-Adhering to the latest security trends and regulatory frameworks is vital for
-the ethical management of environmental sensor data. The evolving research in
-IoT security serves as a guide for future developments in this field
-\cite{CurrentResearchIoTSecurity2020}.
+Organisations need to navigate these complex legal landscapes while maintaining
+data accessibility and control. In cases where data crosses international
+borders, it is essential to understand who has jurisdiction over the data and
+under what conditions it can be accessed or shared. This is particularly
+important in situations involving judicial investigations or government
+requests for access to data.
 
 \newpage
 \chapter{Conclusion}
-
-In conclusion, this study presents a significant advancement in air quality
-monitoring through IoT technologies, demonstrating the effectiveness of the
-Grafana dashboard in data visualisation and analysis. The successful load test
-indicates the system's scalability, catering to simultaneous user access.
-Addressing data security and sovereignty, the project highlights the importance
-of robust data management practices in IoT environments. While acknowledging
-certain limitations, this research lays a foundation for future explorations in
-IoT security and data handling. Overall, it contributes valuable insights to
-the field of environmental monitoring and data security, underscoring the
-potential of IoT in addressing critical ecological issues.
+To conclude, this project successfully demonstrated the integration of cloud
+computing and IoT technologies to create a robust real-time environmental
+monitoring system, focusing on air quality. The implementation of a scalable
+data processing pipeline using Apache Spark and Amazon Timestream enabled the
+efficient management and analysis of large volumes of sensor data, ensuring
+accurate real-time AQI calculations. The development of a user-friendly Grafana
+dashboard facilitated data visualisation and accessibility, making the system
+invaluable to stakeholders in environmental monitoring, public health and urban
+planning. Load tests confirmed the system's scalability and responsiveness,
+underlining its ability to adapt dynamically to varying demands. Compliance
+with data security and sovereignty standards has ensured that the system
+complies with international regulations. This project not only demonstrates the
+practical application of combining cloud computing and IoT in environmental
+data management, but also lays the foundations for future advances in this
+vital area.
 
 \bibliographystyle{CranfieldNumbered}
 \bibliography{CUCitations}
