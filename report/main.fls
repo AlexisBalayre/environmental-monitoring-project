@@ -1330,12 +1330,6 @@ INPUT ../services/spark_python_job.service
 INPUT ../services/spark_python_job.service
 INPUT ../services/spark_python_job.service
 INPUT ../services/spark_python_job.service
-INPUT ../services/grafana_server.service
-INPUT ../services/grafana_server.service
-INPUT ../services/grafana_server.service
-INPUT ../services/grafana_server.service
-INPUT ../services/grafana_server.service
-INPUT ../services/grafana_server.service
 INPUT ../test/artillery_load_test.yml
 INPUT ../test/artillery_load_test.yml
 INPUT ../test/artillery_load_test.yml

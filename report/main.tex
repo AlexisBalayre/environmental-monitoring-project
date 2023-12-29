@@ -192,12 +192,11 @@ researchers, policy makers and the public, who need rapid access to
 environmental data to make informed decisions.
 
 The report describes the methodology, system architecture and implementation
-strategy adopted to ensure rapid data processing and distribution. Challenges
-encountered and corresponding solutions are also discussed, as well as the
-wider implications of the system for public health, urban planning and
-environmental awareness. This study demonstrates the practical application and
-benefits of combining cloud computing and IoT in the management and analysis of
-environmental data.
+strategy adopted to ensure rapid data processing and distribution. It discusses
+the technical challenges encountered during the project and the innovative
+solutions developed to address them. Additionally, this study demonstrates the
+practical application and benefits of combining cloud computing and IoT in the
+management and analysis of environmental data.
 
 \chapter{Methodologies}\label{chap:one}
 
@@ -340,7 +339,7 @@ The data storing process represents the final phase in the IoT data collecting
 and processing pipeline. Once the AQI has been calculated, the data must be
 stored efficiently and securely to allow subsequent analysis and real-time
 consultation. The \texttt{storing.py} script (see
-Appendix~ref{appendix:storing} for detailed code) is designed to interact with
+Appendix~\ref{appendix:storing} for detailed code) is designed to interact with
 the Amazon Timestream database.
 
 The \texttt{keepOnlyUpdatedRows} function is responsible for checking what data
@@ -356,12 +355,6 @@ structured records, containing the dimensions and measurements corresponding to
 each sensor. These records are then written to Timestream in batches. The
 process is carefully managed to ensure that records are written atomically and
 consistently, with robust exception handling to deal with any rejected records.
-
-In conclusion, the integration of Spark with Amazon Timestream offers a
-powerful solution for storing environmental sensor data. Spark's ability to
-process and filter data in a distributed manner aligns perfectly with
-Timestream's high availability and auto-scaling capabilities, ensuring a
-resilient, high-performance data infrastructure.
 
 \subsection{Pipeline Implementation on AWS}
 Setting up an IoT data processing pipeline on Amazon Web Services (AWS)
@@ -433,9 +426,10 @@ Group Pipeline.
 \subsubsection{AMI Configuration}
 An Amazon Machine Image (AMI) serves as a blueprint for launching an EC2
 instance, containing the necessary software configuration. For this project, a
-custom AMI was created using the Amazon Linux 2 operating system, specifically
-tailored to host the Grafana server for efficient data visualisation.
-
+custom AMI was created using the Amazon Linux 2 operating system. A Grafana
+server was configured on the AMI to display the IoT data in a user-friendly
+format. The AMI was then stored in the AWS Elastic Block Store (EBS) for future
+use.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/ami.png}
@@ -460,8 +454,7 @@ Grafana server.
 The Auto Scaling Group is configured to automatically adjust the number of EC2
 instances in response to the changing demand. It scales between 1 and 5
 instances based on CPU utilisation, enhancing the system's responsiveness and
-efficiency. The group is also linked to the specified target group and load
-balancer, facilitating effective traffic distribution.
+efficiency.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{images/auto-scaling-group.png}
@@ -510,15 +503,12 @@ dashboard is accessible to users through a user-friendly URL.
 \section{Results}
 \subsection{Accessing the Data - Grafana Dashboard}
 
-The Grafana dashboard, a vital tool in air quality monitoring, is accessible at
-the following URL:
-\href{http://grafana-1777174802.us-east-1.elb.amazonaws.com/d/f8742187-f440-4ee8-96cc-bad5af8edef1/air-quality-monitoring}{Air
-    Quality Monitoring Dashboard}.
-
 The Grafana dashboard provides an interactive interface enabling users to
-analyse air quality data. Users can customise the time interval, measurement
-value and location ID. The dashboard consists of five main panels, each
-providing unique information::
+analyse air quality data. It is accessible at the following URL:
+\href{http://grafana-1777174802.us-east-1.elb.amazonaws.com/d/f8742187-f440-4ee8-96cc-bad5af8edef1/air-quality-monitoring}{Air
+    Quality Monitoring Dashboard}. Users can customise the time interval,
+measurement value and location ID. The dashboard consists of five main panels,
+each providing unique information:
 \begin{enumerate}
     \item \textbf{Measure Value Evolution:} This panel shows the evolution of the selected measure value in the selected location over the selected time range. This panel can be seen in Figure~\ref{fig:grafana-main-panel-1}.
     \item \textbf{Max AQI:} This panel shows the maximum AQI value in the selected location over the selected time range. This panel can be seen in Figure~\ref{fig:grafana-main-panel-1}.
@@ -615,10 +605,10 @@ The Auto Scaling Group behaviour was monitored during the load test thanks to a
 Python script available in Appendix~\ref{appendix:monitoring}. The monitoring
 data is available in the \texttt{metrics.csv} file in the \texttt{test} folder.
 For enhanced data interpretation and visualisation, a Jupyter Notebook was
-developed was developed to provide a graphical representation of system
-performance during load testing, as shown in Figure~\ref{fig:load-test-result},
-which illustrates the dynamic scaling actions triggered by fluctuating demand
-on system resources.
+developed to provide a graphical representation of system performance during
+load testing, as shown in Figure~\ref{fig:load-test-result}, which illustrates
+the dynamic scaling actions triggered by fluctuating demand on system
+resources.
 
 At the start of the load test, only one instance was active. The data shows
 that this instance quickly reached its processing capacity. In response, the
@@ -720,7 +710,6 @@ vital area.
     services/
         get_iam_credentials.service
         spark_python_job.service
-        grafana_server.service
     test/
         artillery_load_test.yml
         monitoring.py
@@ -789,10 +778,12 @@ vital area.
     \section{Scripts \& Services Source Codes }
     \subsection{Scripts}
 
+    \subsubsection{Get IAM Credentials Script}
     Script used by the \texttt{get\_iam\_credentials} service to retrieve the IAM
     credentials from the metadata server.\label{appendix:get-iam-credentials}
     \lstinputlisting[style=bashstyle]{../scripts/get_iam_credentials.sh}
 
+    \subsubsection{Start Spark Job Script}
     Script used by the \texttt{spark\_python\_job} service to run the Python Spark
     job.\label{appendix:start-spark-job}
     \lstinputlisting[style=bashstyle]{../scripts/start_spark_job.sh}
@@ -809,12 +800,6 @@ vital area.
     Service used by the Ubuntu EC2 instance to run the Python Spark job (Data
     Collecting, Processing and Storing).\label{appendix:spark-python-job-service}
     \lstinputlisting[style=servicestyle]{../services/spark_python_job.service}
-
-    \newpage
-    \subsubsection{Grafana Server Service}
-    Service used by the Linux EC2 instances to run the Grafana server (Data
-    Distributing).\label{appendix:grafana-server-service}
-    \lstinputlisting[style=servicestyle]{../services/grafana_server.service}
 
     \newpage
     \section{Load Test Source Codes }
