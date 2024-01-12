@@ -1,52 +1,89 @@
-# Cloud Computing Project
+# Cloud Computing and IoT for Environmental Monitoring
 
-## Project Overview
+## Overview 🌍
 
-This project demonstrates the integration of cloud computing with the Internet of Things (IoT) for real-time environmental monitoring, focusing on air quality. The aim is to efficiently manage large volumes of data from IoT sensors and accurately calculate the Air Quality Index (AQI).
+This project integrates Cloud Computing with the Internet of Things (IoT) for comprehensive environmental monitoring, with a focus on air quality analysis. Utilising Apache Spark and Amazon Timestream, it manages large volumes of data from IoT sensors to calculate the Air Quality Index (AQI) accurately, offering insights into environmental conditions. The file `report.pdf` provides a detailed overview of the project.
 
-## System Architecture
+## Key Features 🌟
 
-- **Data Collection**: IoT sensors collect environmental data.
-- **Data Processing**: Utilises Apache Spark for data processing.
-- **Data Storage**: Employs Amazon Timestream as the time-series database.
-- **Data Visualisation**: Data is visualised through a Grafana dashboard.
+- **Real-time Data Collection**: IoT sensors gather environmental data continuously.
+- **Efficient Data Processing**: Leverages Apache Spark for effective data handling.
+- **Robust Data Storage**: Uses Amazon Timestream for optimised time-series data management.
+- **Dynamic Data Visualisation**: Features a Grafana dashboard for interactive and real-time data insights.
+- **Environmental Impact Assessment**: Evaluates the project's contribution to enhanced environmental monitoring.
 
-## Installation and Setup
+## Getting Started 🚀
 
-### Prerequisites
+### Installation
 
-- Python 3
-- Apache Spark
-- Amazon Timestream
-- Grafana
+1. **Clone the repository**:
 
-### Installation Steps
+   ```bash
+   git clone git@github.com:AlexisBalayre/environmental-monitoring-project.git
+   ```
 
-1. **Create a Virtual Environment**:
-   ```shell
+2. **Navigate to the project directory**:
+
+   ```bash
+   cd environmental-monitoring-project
+   ```
+
+3. **Set up a virtual environment**:
+
+   ```bash
    python3 -m venv venv
    ```
-2. **Activate the Virtual Environment**:
-   ```shell
-   source venv/bin/activate
+
+4. **Activate the virtual environment**:
+
+   - For Windows:
+
+     ```bash
+     .\venv\Scripts\activate
+     ```
+
+   - For Unix or MacOS:
+
+     ```bash
+     source venv/bin/activate
+     ```
+
+5. **Install dependencies**:
+
+   ```bash
+   pip install -r requirements.txt
    ```
-3. **Install Dependencies**:
-   ```shell
-   pip3 install -r requirements.txt
-   ```
-4. **Run the Main Program**:
-   ```shell
-   python3 main.py
-   ```
 
-## Usage
+### Usage
 
-After installation, run `python3 main.py` to start the system. Access the Grafana dashboard for data visualisation and analysis.
+- **Start the system**: Run `main.py` to begin data collection and processing.
 
-## Challenges and Solutions
+  ```bash
+  python main.py
+  ```
 
-The report discusses various technical challenges and innovative solutions implemented in this project.
+- **Visualise the data**: Access the Grafana dashboard for real-time data analysis and visualisations.
 
-## Environmental Impact
+## Project Structure 📂
 
-This integration significantly contributes to enhanced environmental monitoring and data analysis capabilities.
+- `lib/`: Core library modules for data collection, processing, and storage.
+- `scripts/`: Scripts for IAM credentials retrieval and Spark job initiation.
+- `services/`: Service configurations for IAM and Spark.
+- `test/`: Testing scripts and visualisation tools.
+- `main.py`: Main executable script.
+- `requirements.txt`: Project dependencies.
+
+## Testing 🧪
+
+The project includes comprehensive testing:
+
+- Load testing configurations and results.
+- Unit testing for data collection, processing, and storage.
+- Visualisation tools for data analysis.
+
+## Dependencies 🛠️
+
+- Apache Spark
+- Python 3.x
+- Amazon Timestream
+- Grafana

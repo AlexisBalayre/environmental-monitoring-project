@@ -1,8 +1,0 @@
-[Unit]
-Description=Script to run the ingestion python script
-
-[Service]
-ExecStart=/usr/local/bin/start_spark_job.sh
-
-[Install]
-WantedBy=multi-user.target
