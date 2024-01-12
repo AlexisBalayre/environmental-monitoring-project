@@ -10,7 +10,14 @@ This project integrates Cloud Computing with the Internet of Things (IoT) for co
 - **Efficient Data Processing**: Leverages Apache Spark for effective data handling.
 - **Robust Data Storage**: Uses Amazon Timestream for optimised time-series data management.
 - **Dynamic Data Visualisation**: Features a Grafana dashboard for interactive and real-time data insights.
-- **Environmental Impact Assessment**: Evaluates the project's contribution to enhanced environmental monitoring.
+
+## Pipeline Architecture
+<img width="795" alt="pipeline" src="https://github.com/AlexisBalayre/environmental-monitoring-project/assets/60859013/3391584a-9027-4075-9ba1-9294eb4cf58e">
+
+## Grafana Dashboard 
+<img width="1512" alt="grafana-1" src="https://github.com/AlexisBalayre/environmental-monitoring-project/assets/60859013/daefbf54-d1cd-42ac-acbd-529b16b2b9ee">
+<img width="1512" alt="grafana-2" src="https://github.com/AlexisBalayre/environmental-monitoring-project/assets/60859013/9017a1b5-72f3-4c46-9f89-f4d8a954dcee">
+<img width="1512" alt="grafana-4" src="https://github.com/AlexisBalayre/environmental-monitoring-project/assets/60859013/cd2ed19b-1109-409c-a69c-694f42099fac">
 
 ## Getting Started 🚀
 
